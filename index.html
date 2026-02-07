@@ -669,7 +669,9 @@ if (count === 0) {
 
          function performClean(type) {
     let text = textInput.value;
-    if (!text) return;
+    if (!text) {
+    showToast('Nothing to clean.');
+    return;
 
     let cleanedText = '';
 
@@ -686,7 +688,8 @@ if (count === 0) {
             continue;
         }
 
-        if (info.action === 'remove') continue;
+        if (info.action === 'remove') {
+    continue;
 
         if (info.action === 'replace') {
             cleanedText += ' ';
@@ -698,7 +701,7 @@ if (count === 0) {
     textInput.value = cleanedText;
     analyzeText(cleanedText);
     showToast('Text cleaned successfully!');
-}
+         }
 
         /**
          * Utilities
