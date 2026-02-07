@@ -9,10 +9,6 @@
 
 <meta name="keywords" content="AI paste fixer, remove zero width space, invisible character remover, clean AI text, hidden unicode cleaner, fix copy paste errors">
     <title>Invisible Character Detector & Smart Cleaner | Remove Zero Width Spaces & Fix AI Text</title>
-
-<meta name="description" content="Free tool to detect and remove invisible characters...">
-
-<meta name="keywords" content="Remove Zero Width Space...">
     <meta name="author" content="Invisible Character Detector">
     <meta name="theme-color" content="#4f46e5">
 
@@ -441,7 +437,7 @@
             <div class="actions-bar">
                 <button class="btn-secondary" id="clearBtn">Clear</button>
                 <div style="flex:1"></div>
-                <button class="btn-secondary" id="cleanNbspBtn">Fix Spaces Only</button>
+                <button class="btn-secondary" id="cleanNbspBtn">Replace NBSP Only</button>
                 <button class="btn-primary" id="cleanAllBtn">Clean All</button>
             </div>
         </div>
@@ -487,7 +483,7 @@
             Runs entirely in browser. No data transmitted.
         </div>
         <div style="margin-top: 0.5rem;">
-            &copy; 2024 Invisible Character Detector. Open Source & Client-Side.
+            &copy; © 2026 AI Paste Fixer. 100% Client-Side.
         </div>
     </footer>
 </div>
@@ -580,7 +576,10 @@
         function updateUI(originalText) {
             // Update counts
             charCount.textContent = `${currentAnalysis.totalChars.toLocaleString()} Characters`;
-            issueBadge.textContent = `${currentAnalysis.issuesFound} Issues Found`;
+            const count = currentAnalysis.issuesFound;
+issueBadge.textContent = count === 1 
+    ? "1 Hidden Character Found"
+    : `${count} Hidden Characters Found`;
             
             if (currentAnalysis.issuesFound > 0) {
                 issueBadge.classList.add('active');
