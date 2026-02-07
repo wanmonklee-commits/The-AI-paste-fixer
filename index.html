@@ -509,7 +509,6 @@
             '\u200F': { name: 'Right-to-Left Mark', code: 'U+200F', type: 'invisible', action: 'remove', desc: 'Directional formatting mark.' },
             '\u2028': { name: 'Line Separator', code: 'U+2028', type: 'invisible', action: 'replace-newline', desc: 'Unicode line break.' },
             '\u2029': { name: 'Paragraph Separator', code: 'U+2029', type: 'invisible', action: 'replace-newline', desc: 'Unicode paragraph break.' }
-        };
 
 const DETECT_REGEX = new RegExp(
   `[${Object.keys(CHAR_MAP)
