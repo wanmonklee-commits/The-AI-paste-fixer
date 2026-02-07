@@ -574,9 +574,13 @@
             // Update counts
             charCount.textContent = `${currentAnalysis.totalChars.toLocaleString()} Characters`;
             const count = currentAnalysis.issuesFound;
-issueBadge.textContent = count === 1 
-    ? "1 Hidden Character Found"
-    : `${count} Hidden Characters Found`;
+if (count === 0) {
+    issueBadge.textContent = "No Hidden Characters";
+} else if (count === 1) {
+    issueBadge.textContent = "1 Hidden Character Found";
+} else {
+    issueBadge.textContent = `${count} Hidden Characters Found`;
+}
             
             if (currentAnalysis.issuesFound > 0) {
                 issueBadge.classList.add('active');
@@ -676,22 +680,25 @@ issueBadge.textContent = count === 1
             // 2. NBSP -> Replace with space
             // 3. Line Separators -> Replace with \n
 
-            let cleanedText = text.split('').map(char => {
-                const info = CHAR_MAP[char];
-                
-                // If character is normal, keep it
-                if (!info) return char;
+            let cleanedText = '';
 
-                // Mode: NBSP Only (Fix spaces only)
-                if (type === 'nbsp-only') {
-                    if (char === '\u00A0') return ' '; // Replace NBSP
-                    return char; // Keep other invisibles
-                }
+for (let char of text) {
+    const info = CHAR_MAP[char];
 
-                // Mode: All (Standard Clean)
-                if (info.action === 'remove') return '';
-                if (info.action === 'replace') return ' ';
-                if (info.action === 'replace-newline') return '\n';
+    if (!info) {
+        cleanedText += char;
+        continue;
+    }
+
+    if (type === 'nbsp-only') {
+        cleanedText += (char === '\u00A0') ? ' ' : char;
+        continue;
+    }
+
+    if (info.action === 'remove') continue;
+    if (info.action === 'replace') cleanedText += ' ';
+    else if (info.action === 'replace-newline') cleanedText += '\n';
+}
                 
                 return char;
             }).join('');
