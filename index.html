@@ -4,12 +4,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>AI Paste Fixer – Remove Zero Width Spaces & Hidden Unicode</title>
-
 <meta name="description" content="Fix copy-paste errors from AI tools and PDFs. Detect and remove zero-width spaces, non-breaking spaces, and hidden Unicode characters instantly. 100% client-side and private.">
-
 <meta name="keywords" content="AI paste fixer, remove zero width space, invisible character remover, clean AI text, hidden unicode cleaner, fix copy paste errors">
-    <title>Invisible Character Detector & Smart Cleaner | Remove Zero Width Spaces & Fix AI Text</title>
-    <meta name="author" content="Invisible Character Detector">
+    <meta name="author" content="AI Paste Fixer">
     <meta name="theme-color" content="#4f46e5">
 
     <style>
@@ -483,7 +480,7 @@
             Runs entirely in browser. No data transmitted.
         </div>
         <div style="margin-top: 0.5rem;">
-            &copy; © 2026 AI Paste Fixer. 100% Client-Side.
+            &copy; 2026 AI Paste Fixer. 100% Client-Side.
         </div>
     </footer>
 </div>
@@ -593,7 +590,7 @@ issueBadge.textContent = count === 1
                     previewArea.innerHTML = '<span class="empty-state">Result preview will appear here...</span>';
                 } else {
                     // XSS Safe: Use textContent-like approach by creating a text node logic or simple escaping
-                    previewArea.textContent = originalText;
+                    previewArea.innerHTML = '<div class="empty-state" style="color: var(--success); font-style: normal;">✓ No hidden characters detected. Your text is clean.</div>';
                 }
             }
         }
@@ -741,9 +738,6 @@ issueBadge.textContent = count === 1
         }
 
         function copyToClipboard() {
-            const text = currentAnalysis.issuesFound > 0 
-                ? "Warning: You are copying text that still has issues. Clean it first?" 
-                : textInput.value;
                 
             // We copy whatever is in the input box, assuming user might want dirty text too
             // But usually we want clean text. Let's copy from input box directly.
