@@ -510,6 +510,16 @@
             '\u2028': { name: 'Line Separator', code: 'U+2028', type: 'invisible', action: 'replace-newline', desc: 'Unicode line break.' },
             '\u2029': { name: 'Paragraph Separator', code: 'U+2029', type: 'invisible', action: 'replace-newline', desc: 'Unicode paragraph break.' }
         };
+        };
+
+const DETECT_REGEX = new RegExp(
+  `[${Object.keys(CHAR_MAP)
+    .map(c => '\\u' + c.charCodeAt(0).toString(16).padStart(4, '0'))
+    .join('')}]`,
+  'g'
+);
+
+// DOM Elements
 
         // DOM Elements
         const textInput = document.getElementById('textInput');
@@ -548,15 +558,12 @@
 
             // Iterate through text to find specific chars
             // We use a regex based on keys for efficiency, but simple iteration works for clarity
-            for (let char of text) {
-                if (CHAR_MAP[char]) {
-                    if (!detectedMap[char]) {
-                        detectedMap[char] = 0;
-                    }
-                    detectedMap[char]++;
-                    issuesFound++;
-                }
-            }
+            let match;
+while ((match = DETECT_REGEX.exec(text)) !== null) {
+    const char = match[0];
+    detectedMap[char] = (detectedMap[char] || 0) + 1;
+    issuesFound++;
+}
 
             currentAnalysis = {
                 totalChars: text.length,
