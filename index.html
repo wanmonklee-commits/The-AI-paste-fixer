@@ -667,46 +667,38 @@ if (count === 0) {
             });
         }
 
-        /**
-         * The Cleaning Logic
-         * type: 'all' | 'nbsp-only'
-         */
-        function performClean(type) {
-            let text = textInput.value;
-            if (!text) return;
+         function performClean(type) {
+    let text = textInput.value;
+    if (!text) return;
 
-            // Smart Logic:
-            // 1. Invisible chars -> Delete
-            // 2. NBSP -> Replace with space
-            // 3. Line Separators -> Replace with \n
+    let cleanedText = '';
 
-            let cleanedText = '';
+    for (let char of text) {
+        const info = CHAR_MAP[char];
 
-for (let char of text) {
-    const info = CHAR_MAP[char];
-
-    if (!info) {
-        cleanedText += char;
-        continue;
-    }
-
-    if (type === 'nbsp-only') {
-        cleanedText += (char === '\u00A0') ? ' ' : char;
-        continue;
-    }
-
-    if (info.action === 'remove') continue;
-    if (info.action === 'replace') cleanedText += ' ';
-    else if (info.action === 'replace-newline') cleanedText += '\n';
-}
-                
-                return char;
-            }).join('');
-
-            textInput.value = cleanedText;
-            analyzeText(cleanedText);
-            showToast('Text cleaned successfully!');
+        if (!info) {
+            cleanedText += char;
+            continue;
         }
+
+        if (type === 'nbsp-only') {
+            cleanedText += (char === '\u00A0') ? ' ' : char;
+            continue;
+        }
+
+        if (info.action === 'remove') continue;
+
+        if (info.action === 'replace') {
+            cleanedText += ' ';
+        } else if (info.action === 'replace-newline') {
+            cleanedText += '\n';
+        }
+    }
+
+    textInput.value = cleanedText;
+    analyzeText(cleanedText);
+    showToast('Text cleaned successfully!');
+}
 
         /**
          * Utilities
