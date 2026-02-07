@@ -669,9 +669,11 @@ if (count === 0) {
 
          function performClean(type) {
     let text = textInput.value;
+
     if (!text) {
-    showToast('Nothing to clean.');
-    return;
+        showToast('Nothing to clean.');
+        return;
+    }
 
     let cleanedText = '';
 
@@ -689,7 +691,8 @@ if (count === 0) {
         }
 
         if (info.action === 'remove') {
-    continue;
+            continue;
+        }
 
         if (info.action === 'replace') {
             cleanedText += ' ';
