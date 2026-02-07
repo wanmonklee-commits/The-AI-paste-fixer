@@ -680,23 +680,28 @@ if (count === 0) {
     for (let char of text) {
         const info = CHAR_MAP[char];
 
+        // Normal character
         if (!info) {
             cleanedText += char;
             continue;
         }
 
+        // Only replace NBSP
         if (type === 'nbsp-only') {
             cleanedText += (char === '\u00A0') ? ' ' : char;
             continue;
         }
 
+        // Remove invisible characters
         if (info.action === 'remove') {
             continue;
         }
 
+        // Replace space-like characters
         if (info.action === 'replace') {
             cleanedText += ' ';
-        } else if (info.action === 'replace-newline') {
+        } 
+        else if (info.action === 'replace-newline') {
             cleanedText += '\n';
         }
     }
