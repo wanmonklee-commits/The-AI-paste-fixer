@@ -557,6 +557,7 @@ const DETECT_REGEX = new RegExp(
             // Iterate through text to find specific chars
             // We use a regex based on keys for efficiency, but simple iteration works for clarity
             let match;
+DETECT_REGEX.lastIndex = 0;
 while ((match = DETECT_REGEX.exec(text)) !== null) {
     const char = match[0];
     detectedMap[char] = (detectedMap[char] || 0) + 1;
