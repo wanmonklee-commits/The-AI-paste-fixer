@@ -1,1 +1,869 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Unicode Cleaner – Remove Zero Width Spaces & Hidden Unicode Characters</title>
+<meta name="description" content="Free Unicode Cleaner to remove zero-width spaces, non-breaking spaces (NBSP), BOM and hidden characters instantly. 100% client-side and secure.">
+<link rel="canonical" href="https://unicodecleaner.online/">
+<!-- Open Graph Meta -->
+<meta property="og:title" content="Unicode Cleaner – Remove Zero Width & Hidden Characters Instantly">
+<meta property="og:description" content="Detect and remove zero-width spaces, non-breaking spaces, and hidden Unicode characters instantly. 100% client-side and private.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://unicodecleaner.online/">
+<meta property="og:image" content="https://unicodecleaner.online/unicode-cleaner-preview.png">
+
+<!-- Twitter Card -->
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Unicode Cleaner – Remove Hidden Characters Instantly">
+<meta name="twitter:description" content="Clean zero-width spaces, NBSP, BOM and invisible Unicode characters instantly.">
+<meta name="twitter:image" content="https://unicodecleaner.online/unicode-cleaner-preview.png">
+<meta name="keywords" content="AI paste fixer, remove zero width space, invisible character remover, clean AI text, hidden unicode cleaner, fix copy paste errors">
+    <meta name="author" content="Unicode Cleaner">
+    <meta name="theme-color" content="#4f46e5">
+    <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "SoftwareApplication",
+  "name": "Unicode Cleaner",
+  "url": "https://unicodecleaner.online/",
+  "applicationCategory": "DeveloperApplication",
+  "operatingSystem": "Web Browser",
+  "description": "Free online Unicode Cleaner to remove zero-width spaces, non-breaking spaces (NBSP), BOM and hidden Unicode characters instantly.",
+  "offers": {
+    "@type": "Offer",
+    "price": "0",
+    "priceCurrency": "USD"
+  }
+}
+    </script>
+
+    <style>
+        :root {
+            --primary: #4f46e5;
+            --primary-hover: #4338ca;
+            --bg-body: #f8fafc;
+            --bg-card: #ffffff;
+            --bg-input: #ffffff;
+            --text-main: #0f172a;
+            --text-muted: #64748b;
+            --border: #e2e8f0;
+            --highlight-bg: #fee2e2;
+            --highlight-text: #991b1b;
+            --highlight-border: #fca5a5;
+            --success: #10b981;
+            --font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+            --shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+        }
+
+        [data-theme="dark"] {
+            --bg-body: #0f172a;
+            --bg-card: #1e293b;
+            --bg-input: #334155;
+            --text-main: #f1f5f9;
+            --text-muted: #94a3b8;
+            --border: #334155;
+            --highlight-bg: #450a0a;
+            --highlight-text: #fca5a5;
+            --highlight-border: #7f1d1d;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: var(--font-family);
+            background-color: var(--bg-body);
+            color: var(--text-main);
+            line-height: 1.5;
+            transition: background-color 0.3s ease, color 0.3s ease;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* Layout & Container */
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem 1.5rem;
+            flex: 1;
+            width: 100%;
+        }
+
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 2rem;
+            padding-bottom: 1rem;
+            border-bottom: 1px solid var(--border);
+        }
+
+        h1 {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--text-main);
+            letter-spacing: -0.025em;
+        }
+
+        .subtitle {
+            font-size: 0.875rem;
+            color: var(--text-muted);
+            margin-top: 0.25rem;
+        }
+
+        /* Controls */
+        .controls-top {
+            display: flex;
+            gap: 1rem;
+            align-items: center;
+        }
+
+        button {
+            cursor: pointer;
+            border: none;
+            outline: none;
+            font-family: inherit;
+            font-weight: 500;
+            transition: all 0.2s;
+            border-radius: 0.375rem;
+        }
+
+        .btn-icon {
+            background: transparent;
+            color: var(--text-muted);
+            padding: 0.5rem;
+            font-size: 1.25rem;
+        }
+
+        .btn-icon:hover {
+            color: var(--text-main);
+            background-color: var(--border);
+        }
+
+        /* Main Grid */
+        .app-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 1.5rem;
+        }
+
+        @media (min-width: 768px) {
+            .app-grid {
+                grid-template-columns: 1fr 1fr;
+            }
+        }
+
+        /* Cards */
+        .card {
+            background-color: var(--bg-card);
+            border-radius: 0.75rem;
+            box-shadow: var(--shadow);
+            border: 1px solid var(--border);
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+        }
+
+        .card-header {
+            padding: 1rem 1.5rem;
+            border-bottom: 1px solid var(--border);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background-color: rgba(0,0,0,0.02);
+        }
+
+        .card-title {
+            font-weight: 600;
+            font-size: 1rem;
+            color: var(--text-main);
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .badge {
+            background-color: var(--border);
+            color: var(--text-muted);
+            font-size: 0.75rem;
+            padding: 0.125rem 0.5rem;
+            border-radius: 999px;
+            font-weight: 600;
+        }
+
+        .badge.active {
+            background-color: var(--highlight-bg);
+            color: var(--highlight-text);
+        }
+
+        /* Input Area */
+        .input-wrapper {
+            position: relative;
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+        }
+
+        textarea {
+            width: 100%;
+            flex: 1;
+            min-height: 300px;
+            padding: 1.5rem;
+            border: none;
+            resize: none;
+            background-color: var(--bg-input);
+            color: var(--text-main);
+            font-family: 'Menlo', 'Monaco', 'Courier New', monospace;
+            font-size: 0.925rem;
+            line-height: 1.6;
+            outline: none;
+        }
+
+        textarea::placeholder {
+            color: var(--text-muted);
+            opacity: 0.6;
+        }
+
+        /* Visual Preview */
+        .preview-wrapper {
+            position: relative;
+            flex: 1;
+            background-color: var(--bg-input);
+            overflow-y: auto;
+            padding: 1.5rem;
+            font-family: 'Menlo', 'Monaco', 'Courier New', monospace;
+            font-size: 0.925rem;
+            line-height: 1.6;
+            color: var(--text-main);
+            white-space: pre-wrap;
+            word-break: break-all;
+            min-height: 300px;
+        }
+
+        /* Highlighting */
+        .char-highlight {
+            background-color: var(--highlight-bg);
+            color: var(--highlight-text);
+            border: 1px solid var(--highlight-border);
+            border-radius: 3px;
+            padding: 0 2px;
+            margin: 0 1px;
+            font-size: 0.75em;
+            font-weight: bold;
+            vertical-align: middle;
+            cursor: help;
+            user-select: none;
+        }
+        
+        .char-highlight::before {
+            content: attr(data-code);
+        }
+
+        /* Actions Bar */
+        .actions-bar {
+            padding: 1rem 1.5rem;
+            background-color: var(--bg-card);
+            border-top: 1px solid var(--border);
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.75rem;
+        }
+
+        .btn-primary {
+            background-color: var(--primary);
+            color: white;
+            padding: 0.625rem 1.25rem;
+        }
+
+        .btn-primary:hover {
+            background-color: var(--primary-hover);
+        }
+
+        .btn-secondary {
+            background-color: transparent;
+            border: 1px solid var(--border);
+            color: var(--text-main);
+            padding: 0.625rem 1rem;
+        }
+
+        .btn-secondary:hover {
+            background-color: var(--border);
+        }
+        
+        .btn-ghost {
+            color: var(--text-muted);
+            padding: 0.625rem 1rem;
+            font-size: 0.875rem;
+            margin-left: auto;
+        }
+        
+        .btn-ghost:hover {
+            color: var(--text-main);
+            text-decoration: underline;
+        }
+
+        /* Stats Panel */
+        .stats-panel {
+            margin-top: 1.5rem;
+            background-color: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 0.75rem;
+            overflow: hidden;
+        }
+
+        .stats-header {
+            padding: 0.75rem 1.5rem;
+            background-color: rgba(0,0,0,0.02);
+            border-bottom: 1px solid var(--border);
+            font-weight: 600;
+            font-size: 0.875rem;
+            color: var(--text-muted);
+        }
+
+        .stats-list {
+            list-style: none;
+        }
+
+        .stat-item {
+            display: flex;
+            align-items: center;
+            padding: 0.75rem 1.5rem;
+            border-bottom: 1px solid var(--border);
+            font-size: 0.875rem;
+        }
+
+        .stat-item:last-child {
+            border-bottom: none;
+        }
+
+        .stat-name {
+            flex: 1;
+            font-weight: 500;
+        }
+
+        .stat-code {
+            font-family: monospace;
+            background-color: var(--border);
+            padding: 0.125rem 0.375rem;
+            border-radius: 4px;
+            margin-right: 1rem;
+            font-size: 0.75rem;
+            color: var(--text-main);
+        }
+
+        .stat-count {
+            font-weight: 700;
+            color: var(--highlight-text);
+        }
+
+        .stat-desc {
+            color: var(--text-muted);
+            font-size: 0.75rem;
+            margin-left: 1rem;
+            display: none;
+        }
+        
+        @media(min-width: 600px) {
+            .stat-desc { display: block; }
+        }
+
+        .empty-state {
+            padding: 2rem;
+            text-align: center;
+            color: var(--text-muted);
+            font-style: italic;
+        }
+
+        /* Footer */
+        footer {
+            margin-top: auto;
+            padding: 2rem 0;
+            text-align: center;
+            font-size: 0.875rem;
+            color: var(--text-muted);
+            border-top: 1px solid var(--border);
+        }
+
+        .privacy-notice {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            background-color: rgba(16, 185, 129, 0.1);
+            color: #059669;
+            padding: 0.25rem 0.75rem;
+            border-radius: 999px;
+            font-size: 0.75rem;
+            font-weight: 600;
+        }
+
+        [data-theme="dark"] .privacy-notice {
+            background-color: rgba(16, 185, 129, 0.2);
+            color: #34d399;
+        }
+        
+        /* Toast Notification */
+        .toast {
+            position: fixed;
+            bottom: 2rem;
+            right: 2rem;
+            background-color: var(--text-main);
+            color: var(--bg-body);
+            padding: 0.75rem 1.5rem;
+            border-radius: 0.5rem;
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+            font-size: 0.875rem;
+            opacity: 0;
+            transform: translateY(1rem);
+            transition: all 0.3s ease;
+            pointer-events: none;
+            z-index: 100;
+        }
+        
+        .toast.show {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+    </style>
+    <!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-VF7KJNPYGK"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-VF7KJNPYGK');
+</script>
+</head>
+<body>
+
+<div class="container">
+    <header>
+        <div>
+            <h1>Unicode Cleaner – Remove Zero Width & Hidden Characters Instantly</h1>
+            <div class="subtitle">Find and remove hidden characters breaking your code, forms, and databases.</div>
+        </div>
+        <div class="controls-top">
+            <button class="btn-icon" id="themeToggle" aria-label="Toggle Dark Mode">
+                <span id="themeIcon">◑</span>
+            </button>
+        </div>
+    </header>
+
+    <div class="app-grid">
+        <div class="card">
+            <div class="card-header">
+                <div class="card-title">
+                    <svg width="18" height="18" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"></path>
+                    </svg>
+                    Input Text
+                </div>
+                <button class="btn-ghost" id="loadSampleBtn">Load Sample Text</button>
+            </div>
+            <div class="input-wrapper">
+                <textarea id="textInput" placeholder="Paste your text here to scan for invisible characters..."></textarea>
+            </div>
+            <div class="actions-bar">
+                <button class="btn-secondary" id="clearBtn">Clear</button>
+                <div style="flex:1"></div>
+                <button class="btn-secondary" id="cleanNbspBtn">Replace NBSP Only</button>
+                <button class="btn-primary" id="cleanAllBtn">Clean All</button>
+            </div>
+        </div>
+
+        <div class="card">
+            <div class="card-header">
+                <div class="card-title">
+                    <svg width="18" height="18" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path>
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"></path>
+                    </svg>
+                    Analysis Preview
+                </div>
+                <div class="badge" id="issueBadge">0 Issues Found</div>
+            </div>
+            <div class="preview-wrapper" id="previewArea">
+                <span class="empty-state" style="display:block; margin-top: 2rem;">Result preview will appear here...</span>
+            </div>
+            <div class="actions-bar">
+                <div style="font-size: 0.75rem; color: var(--text-muted);" id="charCount">0 Characters</div>
+                <div style="flex:1"></div>
+                <button class="btn-secondary" id="copyBtn">
+                    Copy Clean Text
+                </button>
+                <button class="btn-secondary" id="exportBtn">
+                    Export .txt
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <div class="stats-panel" id="statsPanel" style="display: none;">
+        <div class="stats-header">DETECTION SUMMARY</div>
+        <ul class="stats-list" id="statsList">
+            </ul>
+    </div>
+
+    <section style="max-width:800px;margin:3rem auto 0 auto;padding:1rem;">
+  <h2>What is a Unicode Cleaner?</h2>
+  <p>
+    A Unicode Cleaner helps detect and remove hidden characters like zero-width spaces (U+200B),
+    non-breaking spaces (U+00A0), byte order marks (U+FEFF), and other invisible Unicode characters.
+    These hidden characters often break code, forms, JSON files, databases, and programming scripts.
+  </p>
+
+  <h2>Why Remove Zero-Width Characters?</h2>
+  <p>
+    Zero-width characters are invisible but can cause syntax errors, validation failures,
+    and unexpected bugs. Developers often encounter these issues when copying text from
+    AI tools, PDFs, Word documents, or websites.
+  </p>
+
+  <h2>Is This Tool Safe?</h2>
+  <p>
+    Yes. Unicode Cleaner runs entirely in your browser. No text is uploaded or stored.
+    Your data remains private and secure.
+  </p>
+    </section>
+
+    <footer>
+        <div class="privacy-notice">
+            <svg width="12" height="12" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="3">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"></path>
+            </svg>
+            Runs entirely in browser. No data transmitted.
+        </div>
+        <div style="margin-top: 0.5rem;">
+            &copy; 2026 Unicode Cleaner. 100% Client-Side.
+        </div>
+    </footer>
+</div>
+
+<div class="toast" id="toast">Copied to clipboard!</div>
+
+<script>
+    /**
+     * INVISIBLE CHARACTER DETECTOR & CLEANER
+     * A pure vanilla JS implementation for detecting and removing problematic Unicode characters.
+     */
+
+    (function() {
+        'use strict';
+
+        // --- Configuration & Definitions ---
+        
+        // Map of problematic characters to detect
+        const CHAR_MAP = {
+            '\u200B': { name: 'Zero Width Space', code: 'U+200B', type: 'invisible', action: 'remove', desc: 'Hidden space often found in copied web text.' },
+            '\u200C': { name: 'Zero Width Non-Joiner', code: 'U+200C', type: 'invisible', action: 'remove', desc: 'Prevents ligatures in complex scripts.' },
+            '\u200D': { name: 'Zero Width Joiner', code: 'U+200D', type: 'invisible', action: 'remove', desc: 'Forces ligatures; breaks some parsers.' },
+            '\u00A0': { name: 'Non-Breaking Space', code: 'U+00A0', type: 'visible-ish', action: 'replace', desc: 'Looks like space but prevents line breaks.' },
+            '\uFEFF': { name: 'Byte Order Mark', code: 'U+FEFF', type: 'invisible', action: 'remove', desc: 'Metadata char often at start of files.' },
+            '\u200E': { name: 'Left-to-Right Mark', code: 'U+200E', type: 'invisible', action: 'remove', desc: 'Directional formatting mark.' },
+            '\u200F': { name: 'Right-to-Left Mark', code: 'U+200F', type: 'invisible', action: 'remove', desc: 'Directional formatting mark.' },
+            '\u2028': { name: 'Line Separator', code: 'U+2028', type: 'invisible', action: 'replace-newline', desc: 'Unicode line break.' },
+            '\u2029': { name: 'Paragraph Separator', code: 'U+2029', type: 'invisible', action: 'replace-newline', desc: 'Unicode paragraph break.' }
+        };
+
+const DETECT_REGEX = new RegExp(
+  `[${Object.keys(CHAR_MAP)
+    .map(c => '\\u' + c.charCodeAt(0).toString(16).padStart(4, '0'))
+    .join('')}]`,
+  'g'
+);
+
+// DOM Elements
+
+        // DOM Elements
+        const textInput = document.getElementById('textInput');
+        const previewArea = document.getElementById('previewArea');
+        const statsPanel = document.getElementById('statsPanel');
+        const statsList = document.getElementById('statsList');
+        const issueBadge = document.getElementById('issueBadge');
+        const charCount = document.getElementById('charCount');
+        const toast = document.getElementById('toast');
+        const themeIcon = document.getElementById('themeIcon');
+
+        // Buttons
+        const cleanAllBtn = document.getElementById('cleanAllBtn');
+        const cleanNbspBtn = document.getElementById('cleanNbspBtn');
+        const clearBtn = document.getElementById('clearBtn');
+        const copyBtn = document.getElementById('copyBtn');
+        const loadSampleBtn = document.getElementById('loadSampleBtn');
+        const themeToggle = document.getElementById('themeToggle');
+        const exportBtn = document.getElementById('exportBtn');
+
+        // State
+        let currentAnalysis = {
+            totalChars: 0,
+            issuesFound: 0,
+            detectedMap: {}
+        };
+
+        // --- Core Functions ---
+
+        /**
+         * Analyzes text for problematic characters
+         */
+        function analyzeText(text) {
+            const detectedMap = {};
+            let issuesFound = 0;
+
+            // Iterate through text to find specific chars
+            // We use a regex based on keys for efficiency, but simple iteration works for clarity
+            let match;
+DETECT_REGEX.lastIndex = 0;
+while ((match = DETECT_REGEX.exec(text)) !== null) {
+    const char = match[0];
+    detectedMap[char] = (detectedMap[char] || 0) + 1;
+    issuesFound++;
+}
+
+            currentAnalysis = {
+                totalChars: text.length,
+                issuesFound: issuesFound,
+                detectedMap: detectedMap
+            };
+
+            updateUI(text);
+        }
+
+        /**
+         * Updates the Preview, Stats, and Badges based on analysis
+         */
+        function updateUI(originalText) {
+            // Update counts
+            charCount.textContent = `${currentAnalysis.totalChars.toLocaleString()} Characters`;
+            const count = currentAnalysis.issuesFound;
+if (count === 0) {
+    issueBadge.textContent = "No Hidden Characters";
+} else if (count === 1) {
+    issueBadge.textContent = "1 Hidden Character Found";
+} else {
+    issueBadge.textContent = `${count} Hidden Characters Found`;
+}
+            
+            if (currentAnalysis.issuesFound > 0) {
+                issueBadge.classList.add('active');
+                statsPanel.style.display = 'block';
+                renderPreview(originalText);
+                renderStats();
+            } else {
+                issueBadge.classList.remove('active');
+                statsPanel.style.display = 'none';
+                if (originalText.length === 0) {
+                    previewArea.innerHTML = '<span class="empty-state">Result preview will appear here...</span>';
+                } else {
+                    // XSS Safe: Use textContent-like approach by creating a text node logic or simple escaping
+                    previewArea.innerHTML = '<div class="empty-state" style="color: var(--success); font-style: normal;">✓ No hidden characters detected. Your text is clean.</div>';
+                }
+            }
+        }
+
+        /**
+         * Renders the text with highlighted problematic characters.
+         * Critical: Must prevent XSS while allowing HTML spans for highlights.
+         */
+        function renderPreview(text) {
+            previewArea.innerHTML = ''; // Clear
+
+            const fragment = document.createDocumentFragment();
+            let lastIndex = 0;
+
+            // Regex to match any of our special chars
+            // Escape the keys for regex usage
+            const keys = Object.keys(CHAR_MAP).map(k => '\\u' + k.charCodeAt(0).toString(16).padStart(4, '0'));
+            const regex = new RegExp(`[${keys.join('')}]`, 'g');
+            
+            let match;
+            while ((match = regex.exec(text)) !== null) {
+                // 1. Append safe text before match
+                const safeText = text.substring(lastIndex, match.index);
+                fragment.appendChild(document.createTextNode(safeText));
+
+                // 2. Append highlighted span for the match
+                const char = match[0];
+                const info = CHAR_MAP[char];
+                
+                const span = document.createElement('span');
+                span.className = 'char-highlight';
+                span.setAttribute('data-code', info.code.replace('U+', ''));
+                span.title = `${info.name} (${info.code}): ${info.desc}`;
+                span.textContent = info.type === 'visible-ish' ? ' ' : ''; // Render a small space or empty
+                
+                // For layout purposes, zero-width items need a tiny width in visualization to be seen
+                if (info.type === 'invisible') {
+                   span.style.padding = "0 4px";
+                }
+
+                fragment.appendChild(span);
+                lastIndex = regex.lastIndex;
+            }
+
+            // 3. Append remaining text
+            fragment.appendChild(document.createTextNode(text.substring(lastIndex)));
+            
+            previewArea.appendChild(fragment);
+        }
+
+        /**
+         * Renders the statistics table
+         */
+        function renderStats() {
+            statsList.innerHTML = '';
+            
+            Object.keys(currentAnalysis.detectedMap).forEach(char => {
+                const count = currentAnalysis.detectedMap[char];
+                const info = CHAR_MAP[char];
+
+                const li = document.createElement('li');
+                li.className = 'stat-item';
+                li.innerHTML = `
+                    <span class="stat-code">${info.code}</span>
+                    <span class="stat-name">${info.name}</span>
+                    <span class="stat-desc">${info.desc}</span>
+                    <span class="stat-count">${count}</span>
+                `;
+                statsList.appendChild(li);
+            });
+        }
+
+         function performClean(type) {
+    let text = textInput.value;
+
+    if (!text) {
+        showToast('Nothing to clean.');
+        return;
+    }
+
+    let cleanedText = '';
+
+    for (let char of text) {
+        const info = CHAR_MAP[char];
+
+        // Normal character
+        if (!info) {
+            cleanedText += char;
+            continue;
+        }
+
+        // Only replace NBSP
+        if (type === 'nbsp-only') {
+            cleanedText += (char === '\u00A0') ? ' ' : char;
+            continue;
+        }
+
+        // Remove invisible characters
+        if (info.action === 'remove') {
+            continue;
+        }
+
+        // Replace space-like characters
+        if (info.action === 'replace') {
+            cleanedText += ' ';
+        } 
+        else if (info.action === 'replace-newline') {
+            cleanedText += '\n';
+        }
+    }
+
+    textInput.value = cleanedText;
+    analyzeText(cleanedText);
+    showToast('Text cleaned successfully!');
+         }
+
+        /**
+         * Utilities
+         */
+        function showToast(msg) {
+            toast.textContent = msg;
+            toast.classList.add('show');
+            setTimeout(() => toast.classList.remove('show'), 3000);
+        }
+
+        function toggleTheme() {
+            const isDark = document.documentElement.getAttribute('data-theme') === 'dark';
+            if (isDark) {
+                document.documentElement.setAttribute('data-theme', 'light');
+                themeIcon.textContent = '◑';
+                localStorage.setItem('theme', 'light');
+            } else {
+                document.documentElement.setAttribute('data-theme', 'dark');
+                themeIcon.textContent = '☀';
+                localStorage.setItem('theme', 'dark');
+            }
+        }
+
+        function loadSample() {
+            // A tricky string with ZWSP, NBSP, BOM
+            const parts = [
+                "Here is a normal sentence.",
+                "Here\u00A0is\u00A0one\u00A0with\u00A0non-breaking\u00A0spaces.",
+                "H\u200Be\u200Bl\u200Bl\u200Bo W\u200Bo\u200Br\u200Bl\u200Bd (Hidden ZWSP inside).",
+                "\uFEFFThis line starts with a Byte Order Mark.",
+                "Code snippet: const\u00A0val\u200B\u00A0=\u00A0true;"
+            ];
+            textInput.value = parts.join('\n');
+            analyzeText(textInput.value);
+            showToast('Sample text loaded');
+        }
+
+        function copyToClipboard() {
+                
+            // We copy whatever is in the input box, assuming user might want dirty text too
+            // But usually we want clean text. Let's copy from input box directly.
+            navigator.clipboard.writeText(textInput.value).then(() => {
+                showToast('Copied to clipboard!');
+            });
+        }
+        
+        function exportTxt() {
+            const text = textInput.value;
+            const blob = new Blob([text], { type: 'text/plain' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = 'cleaned_text.txt';
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+            URL.revokeObjectURL(url);
+        }
+
+        // --- Event Listeners ---
+
+        textInput.addEventListener('input', (e) => analyzeText(e.target.value));
+        
+        cleanAllBtn.addEventListener('click', () => performClean('all'));
+        cleanNbspBtn.addEventListener('click', () => performClean('nbsp-only'));
+        
+        clearBtn.addEventListener('click', () => {
+            textInput.value = '';
+            analyzeText('');
+            textInput.focus();
+        });
+
+        copyBtn.addEventListener('click', copyToClipboard);
+        exportBtn.addEventListener('click', exportTxt);
+        loadSampleBtn.addEventListener('click', loadSample);
+        themeToggle.addEventListener('click', toggleTheme);
+
+        // Init
+        const savedTheme = localStorage.getItem('theme');
+        if (savedTheme === 'dark' || (!savedTheme && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+            document.documentElement.setAttribute('data-theme', 'dark');
+            themeIcon.textContent = '☀';
+        }
+
+    })();
+</script>
+
+</body>
+</html>
 
