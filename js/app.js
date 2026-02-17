@@ -1,4 +1,4 @@
-alert("NEW JS LOADED");
+
     /**
      * INVISIBLE CHARACTER DETECTOR & CLEANER
      * A pure vanilla JS implementation for detecting and removing problematic Unicode characters.
