@@ -22,6 +22,17 @@
             '\u2029': { name: 'Paragraph Separator', code: 'U+2029', type: 'invisible', action: 'replace-newline', desc: 'Unicode paragraph break.' }
         };
 
+        // Smart Quotes Map
+const SMART_QUOTES_MAP = {
+    '\u2018': "'",  // Left single quote
+    '\u2019': "'",  // Right single quote
+    '\u201C': '"',  // Left double quote
+    '\u201D': '"',  // Right double quote
+    '\u201A': ',',  // Low single comma
+    '\u201E': '"',  // Low double quote
+    '\u2026': '...' // Ellipsis
+};
+
 const DETECT_REGEX = new RegExp(
   `[${Object.keys(CHAR_MAP)
     .map(c => '\\u' + c.charCodeAt(0).toString(16).padStart(4, '0'))
