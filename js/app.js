@@ -239,9 +239,9 @@ if (count === 0) {
     textInput.value = cleanedText;
     analyzeText(cleanedText);
     showToast('Text cleaned successfully!');
-             alert("Fix Quotes Clicked");
          }
 function fixSmartQuotes() {
+    alert("Fix Quotes Button Working");
     let text = textInput.value;
 
     if (!text) {
