@@ -56,6 +56,7 @@ const DETECT_REGEX = new RegExp(
         const cleanAllBtn = document.getElementById('cleanAllBtn');
         const cleanNbspBtn = document.getElementById('cleanNbspBtn');
         const clearBtn = document.getElementById('clearBtn');
+        const fixQuotesBtn = document.getElementById('fixQuotesBtn');
         const copyBtn = document.getElementById('copyBtn');
         const loadSampleBtn = document.getElementById('loadSampleBtn');
         const themeToggle = document.getElementById('themeToggle');
@@ -239,7 +240,32 @@ if (count === 0) {
     analyzeText(cleanedText);
     showToast('Text cleaned successfully!');
          }
+function fixSmartQuotes() {
+    let text = textInput.value;
 
+    if (!text) {
+        showToast('Nothing to fix.');
+        return;
+    }
+
+    let count = 0;
+
+    const regex = /[\u2018\u2019\u201C\u201D\u201A\u201E\u2026]/g;
+
+    const cleanedText = text.replace(regex, (match) => {
+        count++;
+        return SMART_QUOTES_MAP[match] || match;
+    });
+
+    textInput.value = cleanedText;
+    analyzeText(cleanedText);
+
+    if (count > 0) {
+        showToast(`Fixed ${count} smart quotes.`);
+    } else {
+        showToast('No smart quotes found.');
+    }
+}
         /**
          * Utilities
          */
