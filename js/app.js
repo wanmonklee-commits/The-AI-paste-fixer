@@ -239,6 +239,7 @@ if (count === 0) {
     textInput.value = cleanedText;
     analyzeText(cleanedText);
     showToast('Text cleaned successfully!');
+             alert("Fix Quotes Clicked");
          }
 function fixSmartQuotes() {
     let text = textInput.value;
