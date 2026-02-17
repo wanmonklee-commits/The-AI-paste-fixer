@@ -330,7 +330,9 @@ function fixSmartQuotes() {
         
         cleanAllBtn.addEventListener('click', () => performClean('all'));
         cleanNbspBtn.addEventListener('click', () => performClean('nbsp-only'));
-        
+        if (fixQuotesBtn) {
+    fixQuotesBtn.addEventListener('click', fixSmartQuotes);
+        }
         clearBtn.addEventListener('click', () => {
             textInput.value = '';
             analyzeText('');
