@@ -38,6 +38,31 @@
   }
 }
     </script>
+
+    <script type="application/ld+json">
+{
+ "@context": "https://schema.org",
+ "@type": "FAQPage",
+ "mainEntity": [
+   {
+     "@type": "Question",
+     "name": "What is a zero width space?",
+     "acceptedAnswer": {
+       "@type": "Answer",
+       "text": "A zero width space (U+200B) is an invisible Unicode character that can break code and JSON parsing."
+     }
+   },
+   {
+     "@type": "Question",
+     "name": "Why does copying from ChatGPT break my JSON?",
+     "acceptedAnswer": {
+       "@type": "Answer",
+       "text": "Hidden Unicode characters like BOM and zero width spaces may be inserted when copying AI generated text."
+     }
+   }
+ ]
+}
+    </script>
     <!-- Google tag (gtag.js) -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-VF7KJNPYGK"></script>
 <script>
