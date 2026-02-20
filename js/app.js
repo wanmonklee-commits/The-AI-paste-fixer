@@ -14,6 +14,13 @@
         allHidden: /[\u200B-\u200D\uFEFF\u200E\u200F\u2028\u2029\u00A0]/g
     };
 
+document.getElementById('loadSampleBtn')?.addEventListener('click', () => {
+    textInput.value = "“Smart Quotes”\nZero Width: H\u200Be\u200Bl\u200Bl\u200Bo\nNBSP: Space\u00A0Between";
+    analyze();
+    showToast("Sample loaded!");
+});
+
+    
     // 3. This runs every time you type
     function analyze() {
         if (!textInput || !previewArea) return;
