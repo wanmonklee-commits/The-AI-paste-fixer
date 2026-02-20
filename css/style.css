@@ -207,18 +207,34 @@
 
         /* Highlighting */
         .char-highlight {
-            background-color: var(--highlight-bg);
-            color: var(--highlight-text);
-            border: 1px solid var(--highlight-border);
-            border-radius: 3px;
-            padding: 0 2px;
-            margin: 0 1px;
-            font-size: 0.75em;
-            font-weight: bold;
-            vertical-align: middle;
-            cursor: help;
-            user-select: none;
-        }
+    background-color: var(--highlight-bg);
+    color: var(--highlight-text);
+    border: 1px solid var(--highlight-border);
+    border-radius: 4px;
+    padding: 0 4px;
+    margin: 0 2px;
+    font-size: 0.8em;
+    font-weight: bold;
+    display: inline-block;
+    line-height: 1.2;
+    cursor: help;
+    user-select: none;
+    vertical-align: middle;
+}
+
+/* This takes the hex code from the JS and displays it */
+.char-highlight::before {
+    content: attr(data-code);
+}
+
+
+/* Makes the "Issues Found" badge turn bright red when issues exist */
+.badge.active {
+    background-color: #ef4444 !important;
+    color: #ffffff !important;
+    font-weight: 700;
+}
+
         
         .char-highlight::before {
             content: attr(data-code);
@@ -368,21 +384,22 @@
         
         /* Toast Notification */
         .toast {
-            position: fixed;
-            bottom: 2rem;
-            right: 2rem;
-            background-color: var(--text-main);
-            color: var(--bg-body);
-            padding: 0.75rem 1.5rem;
-            border-radius: 0.5rem;
-            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
-            font-size: 0.875rem;
-            opacity: 0;
-            transform: translateY(1rem);
-            transition: all 0.3s ease;
-            pointer-events: none;
-            z-index: 100;
-        }
+    position: fixed;
+    bottom: 2rem;
+    right: 2rem;
+    background-color: var(--text-main);
+    color: var(--bg-body);
+    padding: 0.75rem 1.5rem;
+    border-radius: 0.5rem;
+    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.3);
+    font-size: 0.875rem;
+    opacity: 0;
+    transform: translateY(1rem);
+    transition: all 0.3s ease;
+    pointer-events: none;
+    z-index: 9999; /* This keeps it above all other elements */
+}
+
         
         .toast.show {
             opacity: 1;
