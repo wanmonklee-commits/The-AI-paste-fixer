@@ -400,6 +400,19 @@
     z-index: 9999; /* This keeps it above all other elements */
 }
 
+/* This ensures textarea text is visible in both modes */
+textarea#textInput {
+    color: var(--text-main);
+    background-color: var(--bg-input);
+}
+
+/* Specifically for the Load Sample button in dark mode */
+[data-theme="dark"] #loadSampleBtn {
+    color: #ffffff;
+    background-color: rgba(255, 255, 255, 0.1);
+}
+
+
         
         .toast.show {
             opacity: 1;
