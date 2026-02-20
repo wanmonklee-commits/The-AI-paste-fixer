@@ -23,22 +23,31 @@
         issueBadge.textContent = `${matches.length} Issues Found`;
         issueBadge.classList.toggle('active', matches.length > 0);
 
-        // Show/Hide the stats panel
-        if (statsPanel) {
+                // Show/Hide the stats panel
+        const statsList = document.getElementById('statsList');
+        if (statsPanel && statsList) {
             statsPanel.style.display = matches.length > 0 ? 'block' : 'none';
+            
+            // NEW CODE: Actually populate the stats list
+            if (matches.length > 0) {
+                const counts = {};
+                matches.forEach(m => {
+                    const hex = 'U+' + m.charCodeAt(0).toString(16).toUpperCase().padStart(4, '0');
+                    counts[hex] = (counts[hex] || 0) + 1;
+                });
+                
+                statsList.innerHTML = Object.entries(counts).map(([hex, count]) => `
+                    <li class="stat-item">
+                        <span class="stat-code">${hex}</span>
+                        <span class="stat-name">Invisible Character</span>
+                        <span class="stat-count">Found ${count} time(s)</span>
+                    </li>
+                `).join('');
+            }
         }
 
         if (text.length === 0) {
-            previewArea.innerHTML = '<span class="empty-state">Result preview will appear here...</span>';
-            return;
-        }
 
-        const highlighted = text
-            .replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;")
-            .replace(CHARS.allHidden, (m) => `<span class="char-highlight" data-code="${m.charCodeAt(0).toString(16).toUpperCase()}"></span>`);
-        
-        previewArea.innerHTML = highlighted;
-    }
 
     function applyFix(type) {
         let val = textInput.value;
