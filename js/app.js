@@ -23,12 +23,12 @@
         issueBadge.textContent = `${matches.length} Issues Found`;
         issueBadge.classList.toggle('active', matches.length > 0);
 
-                // Show/Hide the stats panel
+        // Show/Hide the stats panel
         const statsList = document.getElementById('statsList');
         if (statsPanel && statsList) {
             statsPanel.style.display = matches.length > 0 ? 'block' : 'none';
             
-            // NEW CODE: Actually populate the stats list
+            // Actually populate the stats list
             if (matches.length > 0) {
                 const counts = {};
                 matches.forEach(m => {
@@ -46,8 +46,19 @@
             }
         }
 
+        // Handle empty text area
         if (text.length === 0) {
+            previewArea.innerHTML = '<span class="empty-state">Result preview will appear here...</span>';
+            return;
+        }
 
+        // Render the highlighted preview text correctly with "U+" formatting
+        const highlighted = text
+            .replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;")
+            .replace(CHARS.allHidden, (m) => `<span class="char-highlight" data-code="U+${m.charCodeAt(0).toString(16).toUpperCase().padStart(4, '0')}"></span>`);
+        
+        previewArea.innerHTML = highlighted;
+    }
 
     function applyFix(type) {
         let val = textInput.value;
