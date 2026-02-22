@@ -1,5 +1,5 @@
 (function() {
-    console.log("Unicode Cleaner Logic Loaded!"); // Check F12 Console for this message
+    console.log("Unicode Cleaner Logic Loaded!");
 
     const textInput = document.getElementById('textInput');
     const previewArea = document.getElementById('previewArea');
@@ -14,28 +14,40 @@
         allHidden: /[\u200B-\u200D\uFEFF\u200E\u200F\u2028\u2029\u00A0]/g
     };
 
+    function cleanTextByType(value, type) {
+        if (type === 'all') {
+            return value
+                .replace(CHARS.invisible, '')
+                .replace(CHARS.nbsp, ' ')
+                .replace(/[“”]/g, '"')
+                .replace(/[‘’]/g, "'");
+        }
+        if (type === 'nbsp') return value.replace(CHARS.nbsp, ' ');
+        if (type === 'quotes') return value.replace(/[“”]/g, '"').replace(/[‘’]/g, "'");
+        return value;
+    }
+
     function analyze() {
         if (!textInput || !previewArea) return;
+
         const text = textInput.value;
         const matches = text.match(CHARS.allHidden) || [];
-        
+
         charCount.textContent = `${text.length.toLocaleString()} Characters`;
         issueBadge.textContent = `${matches.length} Issues Found`;
         issueBadge.classList.toggle('active', matches.length > 0);
 
-        // Show/Hide the stats panel
         const statsList = document.getElementById('statsList');
         if (statsPanel && statsList) {
             statsPanel.style.display = matches.length > 0 ? 'block' : 'none';
-            
-            // Actually populate the stats list
+
             if (matches.length > 0) {
                 const counts = {};
                 matches.forEach(m => {
                     const hex = 'U+' + m.charCodeAt(0).toString(16).toUpperCase().padStart(4, '0');
                     counts[hex] = (counts[hex] || 0) + 1;
                 });
-                
+
                 statsList.innerHTML = Object.entries(counts).map(([hex, count]) => `
                     <li class="stat-item">
                         <span class="stat-code">${hex}</span>
@@ -46,17 +58,19 @@
             }
         }
 
-        // Handle empty text area
         if (text.length === 0) {
             previewArea.innerHTML = '<span class="empty-state">Result preview will appear here...</span>';
             return;
         }
 
-        // Render the highlighted preview text correctly with "U+" formatting
         const highlighted = text
-            .replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;")
-            .replace(CHARS.allHidden, (m) => `<span class="char-highlight" data-code="U+${m.charCodeAt(0).toString(16).toUpperCase().padStart(4, '0')}"></span>`);
-        
+            .replace(/&/g, "&amp;")
+            .replace(/</g, "&lt;")
+            .replace(/>/g, "&gt;")
+            .replace(CHARS.allHidden, (m) =>
+                `<span class="char-highlight" data-code="U+${m.charCodeAt(0).toString(16).toUpperCase().padStart(4, '0')}"></span>`
+            );
+
         previewArea.innerHTML = highlighted;
     }
 
@@ -64,14 +78,8 @@
         let val = textInput.value;
         if (!val) { showToast("Nothing to clean!"); return; }
 
-        if (type === 'all') {
-            val = val.replace(CHARS.invisible, '').replace(CHARS.nbsp, ' ').replace(/[“”]/g, '"').replace(/[‘’]/g, "'");
-        } else if (type === 'nbsp') {
-            val = val.replace(CHARS.nbsp, ' ');
-        } else if (type === 'quotes') {
-            val = val.replace(/[“”]/g, '"').replace(/[‘’]/g, "'");
-        }
-        
+        val = cleanTextByType(val, type);
+
         textInput.value = val;
         analyze();
         showToast("Cleaned successfully!");
@@ -84,19 +92,31 @@
         setTimeout(() => toast.classList.remove('show'), 2500);
     }
 
-    // --- EVENT LISTENERS ---
+    // Event Listeners
     textInput?.addEventListener('input', analyze);
-    
+
     document.getElementById('cleanAllBtn')?.addEventListener('click', () => applyFix('all'));
     document.getElementById('cleanNbspBtn')?.addEventListener('click', () => applyFix('nbsp'));
     document.getElementById('fixQuotesBtn')?.addEventListener('click', () => applyFix('quotes'));
-    document.getElementById('clearBtn')?.addEventListener('click', () => { textInput.value = ''; analyze(); });
-    
+    document.getElementById('clearBtn')?.addEventListener('click', () => {
+        textInput.value = '';
+        analyze();
+    });
+
     document.getElementById('copyBtn')?.addEventListener('click', () => {
         if (!textInput.value) return;
-        navigator.clipboard.writeText(textInput.value);
+        const cleanedText = cleanTextByType(textInput.value, 'all');
+        textInput.value = cleanedText;
+        analyze();
+        navigator.clipboard.writeText(cleanedText);
         showToast("Copied clean text!");
     });
+
+    // Load saved theme
+    const savedTheme = localStorage.getItem('theme');
+    if (savedTheme === 'dark' || savedTheme === 'light') {
+        document.documentElement.setAttribute('data-theme', savedTheme);
+    }
 
     document.getElementById('loadSampleBtn')?.addEventListener('click', (e) => {
         e.preventDefault();
@@ -109,6 +129,7 @@
         e.preventDefault();
         const text = textInput.value;
         if (!text) { showToast("Nothing to export!"); return; }
+
         const blob = new Blob([text], { type: 'text/plain' });
         const url = URL.createObjectURL(blob);
         const a = document.createElement('a');
