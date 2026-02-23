@@ -117,7 +117,10 @@
 });
 
     // Load saved theme
-    const savedTheme = localStorage.getItem('theme');
+    let savedTheme;
+try {
+    savedTheme = localStorage.getItem('theme');
+} catch (e) {}
     if (savedTheme === 'dark' || savedTheme === 'light') {
         document.documentElement.setAttribute('data-theme', savedTheme);
     }
@@ -148,7 +151,9 @@
     document.getElementById('themeToggle')?.addEventListener('click', () => {
         const isDark = document.documentElement.getAttribute('data-theme') === 'dark';
         document.documentElement.setAttribute('data-theme', isDark ? 'light' : 'dark');
-        localStorage.setItem('theme', isDark ? 'light' : 'dark');
+  try {
+    localStorage.setItem('theme', isDark ? 'light' : 'dark');
+} catch (e) {}
     });
 
 })();
