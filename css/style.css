@@ -1,5 +1,5 @@
-<style>
-        :root {
+
+            :root {
             --primary: #4f46e5;
             --primary-hover: #4338ca;
             --bg-body: #f8fafc;
@@ -405,4 +405,3 @@
             opacity: 1;
             transform: translateY(0);
         }
-</style>
