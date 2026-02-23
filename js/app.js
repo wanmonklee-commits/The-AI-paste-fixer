@@ -103,14 +103,18 @@
         analyze();
     });
 
-    document.getElementById('copyBtn')?.addEventListener('click', () => {
-        if (!textInput.value) return;
-        const cleanedText = cleanTextByType(textInput.value, 'all');
-        textInput.value = cleanedText;
-        analyze();
-        navigator.clipboard.writeText(cleanedText);
+    document.getElementById('copyBtn')?.addEventListener('click', async () => {
+    if (!textInput.value) return;
+
+    const cleanedText = cleanTextByType(textInput.value, 'all');
+
+    try {
+        await navigator.clipboard.writeText(cleanedText);
         showToast("Copied clean text!");
-    });
+    } catch (err) {
+        showToast("Copy failed!");
+    }
+});
 
     // Load saved theme
     const savedTheme = localStorage.getItem('theme');
