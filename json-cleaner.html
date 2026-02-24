@@ -1,0 +1,386 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>JSON Formatter & Cleaner – Validate, Pretty Print, Minify JSON Online</title>
+    <meta name="description" content="Free JSON Formatter + Cleaner to validate, pretty-print, minify, and remove hidden Unicode characters like zero-width spaces, BOM, and NBSP. 100% private and browser-based.">
+    <link rel="canonical" href="https://unicodecleaner.online/json-cleaner.html">
+    <meta property="og:title" content="JSON Formatter & Cleaner – Validate, Pretty Print, Minify">
+    <meta property="og:description" content="Validate JSON, pretty print, minify, and clean hidden characters instantly. 100% client-side and secure.">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://unicodecleaner.online/json-cleaner.html">
+    <meta property="og:image" content="https://unicodecleaner.online/unicode-cleaner-preview.png">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="JSON Formatter & Cleaner – Validate, Pretty Print, Minify">
+    <meta name="twitter:description" content="Professional JSON formatter and cleaner to validate, prettify, minify, and remove hidden characters.">
+    <meta name="twitter:image" content="https://unicodecleaner.online/unicode-cleaner-preview.png">
+    <meta name="author" content="UnicodeCleaner.online">
+    <meta name="theme-color" content="#4f46e5">
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "SoftwareApplication",
+      "name": "JSON Formatter + Cleaner",
+      "url": "https://unicodecleaner.online/json-cleaner.html",
+      "applicationCategory": "DeveloperApplication",
+      "operatingSystem": "Web Browser",
+      "description": "Validate, pretty print, minify, and clean hidden Unicode characters in JSON instantly. Fully client-side.",
+      "offers": {
+        "@type": "Offer",
+        "price": "0",
+        "priceCurrency": "USD"
+      }
+    }
+    </script>
+    <style>
+        :root {
+            --primary: #4f46e5;
+            --primary-hover: #4338ca;
+            --bg-body: #f8fafc;
+            --bg-card: #ffffff;
+            --bg-input: #ffffff;
+            --text-main: #0f172a;
+            --text-muted: #64748b;
+            --border: #e2e8f0;
+            --success-bg: #dcfce7;
+            --success-text: #166534;
+            --error-bg: #fee2e2;
+            --error-text: #991b1b;
+            --font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+            --shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+        }
+
+        [data-theme="dark"] {
+            --bg-body: #0f172a;
+            --bg-card: #1e293b;
+            --bg-input: #334155;
+            --text-main: #f1f5f9;
+            --text-muted: #94a3b8;
+            --border: #334155;
+            --success-bg: rgba(34, 197, 94, 0.2);
+            --success-text: #86efac;
+            --error-bg: rgba(239, 68, 68, 0.2);
+            --error-text: #fca5a5;
+        }
+
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+
+        body {
+            font-family: var(--font-family);
+            background-color: var(--bg-body);
+            color: var(--text-main);
+            line-height: 1.5;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem 1.5rem;
+            flex: 1;
+            width: 100%;
+        }
+
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 2rem;
+            padding-bottom: 1rem;
+            border-bottom: 1px solid var(--border);
+        }
+
+        h1 { font-size: 1.5rem; font-weight: 700; letter-spacing: -0.025em; }
+        .subtitle { font-size: 0.875rem; color: var(--text-muted); margin-top: 0.25rem; }
+
+        button {
+            cursor: pointer;
+            border: none;
+            outline: none;
+            font-family: inherit;
+            font-weight: 500;
+            border-radius: 0.375rem;
+            transition: all 0.2s;
+        }
+
+        .btn-icon {
+            background: transparent;
+            color: var(--text-muted);
+            padding: 0.5rem;
+            font-size: 1.25rem;
+        }
+
+        .btn-icon:hover { color: var(--text-main); background-color: var(--border); }
+
+        .app-grid { display: grid; grid-template-columns: 1fr; gap: 1.5rem; }
+        @media (min-width: 768px) { .app-grid { grid-template-columns: 1fr 1fr; } }
+
+        .card {
+            background-color: var(--bg-card);
+            border-radius: 0.75rem;
+            box-shadow: var(--shadow);
+            border: 1px solid var(--border);
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+        }
+
+        .card-header {
+            padding: 1rem 1.5rem;
+            border-bottom: 1px solid var(--border);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background-color: rgba(0, 0, 0, 0.02);
+        }
+
+        .card-title { font-weight: 600; font-size: 1rem; display: flex; align-items: center; gap: 0.5rem; }
+        .badge {
+            background-color: var(--border);
+            color: var(--text-muted);
+            font-size: 0.75rem;
+            padding: 0.125rem 0.5rem;
+            border-radius: 999px;
+            font-weight: 600;
+        }
+
+        .input-wrapper { flex: 1; display: flex; }
+
+        textarea, .output-panel {
+            width: 100%;
+            min-height: 360px;
+            padding: 1.5rem;
+            border: none;
+            background-color: var(--bg-input);
+            color: var(--text-main);
+            font-family: 'Menlo', 'Monaco', 'Courier New', monospace;
+            font-size: 0.925rem;
+            line-height: 1.6;
+            resize: none;
+            outline: none;
+            white-space: pre;
+            overflow: auto;
+        }
+
+        .output-panel { word-break: normal; }
+
+        .status-box {
+            margin: 1rem 1.5rem 0;
+            padding: 0.75rem 1rem;
+            border-radius: 0.5rem;
+            font-size: 0.875rem;
+            display: none;
+        }
+
+        .status-box.success { background: var(--success-bg); color: var(--success-text); display: block; }
+        .status-box.error { background: var(--error-bg); color: var(--error-text); display: block; }
+
+        .actions-bar {
+            padding: 1rem 1.5rem;
+            border-top: 1px solid var(--border);
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.75rem;
+            background-color: var(--bg-card);
+        }
+
+        .btn-primary { background-color: var(--primary); color: #fff; padding: 0.625rem 1rem; }
+        .btn-primary:hover { background-color: var(--primary-hover); }
+        .btn-secondary { background: transparent; border: 1px solid var(--border); color: var(--text-main); padding: 0.625rem 1rem; }
+        .btn-secondary:hover { background: var(--border); }
+
+        .meta-row { font-size: 0.75rem; color: var(--text-muted); }
+
+        .toast {
+            position: fixed;
+            bottom: 2rem;
+            right: 2rem;
+            background-color: var(--text-main);
+            color: var(--bg-body);
+            padding: 0.75rem 1.5rem;
+            border-radius: 0.5rem;
+            opacity: 0;
+            transform: translateY(1rem);
+            transition: all 0.3s ease;
+            pointer-events: none;
+        }
+        .toast.show { opacity: 1; transform: translateY(0); }
+
+        footer {
+            margin-top: auto;
+            padding: 2rem 0;
+            text-align: center;
+            font-size: 0.875rem;
+            color: var(--text-muted);
+            border-top: 1px solid var(--border);
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <header>
+        <div>
+            <h1>JSON Formatter + Cleaner</h1>
+            <div class="subtitle">Validate, pretty print, minify, and remove hidden characters from JSON with full client-side privacy.</div>
+        </div>
+        <button class="btn-icon" id="themeToggle" aria-label="Toggle Dark Mode"><span id="themeIcon">◑</span></button>
+    </header>
+
+    <div class="app-grid">
+        <div class="card">
+            <div class="card-header">
+                <div class="card-title">Input JSON</div>
+                <div class="badge" id="inputCount">0 chars</div>
+            </div>
+            <div class="input-wrapper">
+                <textarea id="jsonInput" placeholder='Paste JSON here, e.g. {"name":"UnicodeCleaner"}'></textarea>
+            </div>
+            <div class="actions-bar">
+                <button class="btn-secondary" id="validateBtn">Validate JSON</button>
+                <button class="btn-primary" id="formatBtn">Format (Pretty Print)</button>
+                <button class="btn-secondary" id="minifyBtn">Minify JSON</button>
+                <button class="btn-secondary" id="cleanBtn">Clean Hidden Characters</button>
+            </div>
+        </div>
+
+        <div class="card">
+            <div class="card-header">
+                <div class="card-title">Output / Preview</div>
+                <div class="badge" id="outputCount">0 chars</div>
+            </div>
+            <div id="statusBox" class="status-box"></div>
+            <pre class="output-panel" id="outputPanel">Your JSON result will appear here…</pre>
+            <div class="actions-bar">
+                <div class="meta-row" id="jsonState">Ready</div>
+                <div style="flex:1"></div>
+                <button class="btn-secondary" id="copyBtn">Copy Result</button>
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        &copy; 2026 Unicode Cleaner. 100% Client-Side.
+    </footer>
+</div>
+
+<div class="toast" id="toast">Copied to clipboard!</div>
+
+<script>
+(() => {
+    const jsonInput = document.getElementById('jsonInput');
+    const outputPanel = document.getElementById('outputPanel');
+    const statusBox = document.getElementById('statusBox');
+    const jsonState = document.getElementById('jsonState');
+    const inputCount = document.getElementById('inputCount');
+    const outputCount = document.getElementById('outputCount');
+    const toast = document.getElementById('toast');
+
+    const cleanHiddenChars = (text) => text.replace(/[\u200B-\u200D\uFEFF\u00A0]/g, '');
+
+    const setStatus = (type, message) => {
+        statusBox.className = 'status-box ' + type;
+        statusBox.textContent = message;
+    };
+
+    const clearStatus = () => {
+        statusBox.className = 'status-box';
+        statusBox.textContent = '';
+    };
+
+    const updateCounts = () => {
+        inputCount.textContent = `${jsonInput.value.length} chars`;
+        outputCount.textContent = `${outputPanel.textContent.length} chars`;
+    };
+
+    const parseJSON = (text) => {
+        const cleaned = cleanHiddenChars(text);
+        return { cleaned, parsed: JSON.parse(cleaned) };
+    };
+
+    document.getElementById('validateBtn').addEventListener('click', () => {
+        try {
+            parseJSON(jsonInput.value);
+            setStatus('success', '✅ Valid JSON. Hidden characters were handled safely before parsing.');
+            jsonState.textContent = 'Validation passed';
+        } catch (error) {
+            setStatus('error', `❌ Invalid JSON: ${error.message}`);
+            jsonState.textContent = 'Validation failed';
+        }
+        updateCounts();
+    });
+
+    document.getElementById('formatBtn').addEventListener('click', () => {
+        try {
+            const { parsed } = parseJSON(jsonInput.value);
+            const pretty = JSON.stringify(parsed, null, 2);
+            outputPanel.textContent = pretty;
+            setStatus('success', '✅ JSON formatted successfully with 2-space indentation.');
+            jsonState.textContent = 'Pretty printed';
+        } catch (error) {
+            setStatus('error', `❌ Invalid JSON: ${error.message}`);
+            jsonState.textContent = 'Formatting failed';
+        }
+        updateCounts();
+    });
+
+    document.getElementById('minifyBtn').addEventListener('click', () => {
+        try {
+            const { parsed } = parseJSON(jsonInput.value);
+            outputPanel.textContent = JSON.stringify(parsed);
+            setStatus('success', '✅ JSON minified successfully.');
+            jsonState.textContent = 'Minified';
+        } catch (error) {
+            setStatus('error', `❌ Invalid JSON: ${error.message}`);
+            jsonState.textContent = 'Minify failed';
+        }
+        updateCounts();
+    });
+
+    document.getElementById('cleanBtn').addEventListener('click', () => {
+        const cleaned = cleanHiddenChars(jsonInput.value);
+        jsonInput.value = cleaned;
+        outputPanel.textContent = cleaned;
+        clearStatus();
+        setStatus('success', '✅ Hidden characters removed (U+200B–U+200D, U+FEFF, U+00A0).');
+        jsonState.textContent = 'Input cleaned';
+        updateCounts();
+    });
+
+    document.getElementById('copyBtn').addEventListener('click', async () => {
+        try {
+            await navigator.clipboard.writeText(outputPanel.textContent);
+            toast.classList.add('show');
+            setTimeout(() => toast.classList.remove('show'), 1500);
+        } catch {
+            setStatus('error', '❌ Could not copy automatically. Please copy manually.');
+        }
+    });
+
+    jsonInput.addEventListener('input', updateCounts);
+
+    const themeToggle = document.getElementById('themeToggle');
+    const themeIcon = document.getElementById('themeIcon');
+    const applyTheme = (theme) => {
+        document.documentElement.setAttribute('data-theme', theme);
+        themeIcon.textContent = theme === 'dark' ? '☀️' : '◑';
+    };
+
+    const savedTheme = localStorage.getItem('theme') || 'light';
+    applyTheme(savedTheme);
+
+    themeToggle.addEventListener('click', () => {
+        const current = document.documentElement.getAttribute('data-theme') || 'light';
+        const next = current === 'dark' ? 'light' : 'dark';
+        localStorage.setItem('theme', next);
+        applyTheme(next);
+    });
+
+    updateCounts();
+})();
+</script>
+</body>
+</html>
