@@ -24,13 +24,15 @@ function removeOrphanSurrogates(str) {
     
     function cleanTextByType(value, type) {
         if (type === 'all') {
-            return value
-    .normalize("NFC")
-    .replace(CHARS.invisible, '')
-    .replace(CHARS.nbsp, ' ')
-    .replace(/[“”]/g, '"')
-    .replace(/[‘’]/g, "'");
-        }
+            return removeOrphanSurrogates(
+    value
+        .normalize("NFC")
+        .replace(CHARS.invisible, '')
+        .replace(CHARS.nbsp, ' ')
+        .replace(/[“”]/g, '"')
+        .replace(/[‘’]/g, "'")
+);
+            
         if (type === 'nbsp') return value.replace(CHARS.nbsp, ' ');
         if (type === 'quotes') return value.replace(/[“”]/g, '"').replace(/[‘’]/g, "'");
         return value;
