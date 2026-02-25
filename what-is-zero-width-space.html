@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>What Is a Zero Width Space (U+200B)? Meaning, Examples & Fix | Unicode Cleaner</title>
+
+<meta name="description" content="What is a zero width space (U+200B)? Learn how this invisible Unicode character breaks JSON, code, forms, and databases — and how to detect and remove it safely.">
+
+<link rel="canonical" href="https://unicodecleaner.online/what-is-zero-width-space.html">
+
+<meta property="og:type" content="article">
+<meta property="og:url" content="https://unicodecleaner.online/what-is-zero-width-space.html">
+<meta property="og:title" content="What Is a Zero Width Space (U+200B)?">
+<meta property="og:description" content="Understand how U+200B works, why it causes hidden bugs, and how developers can remove it safely.">
+<meta property="og:image" content="https://unicodecleaner.online/unicode-cleaner-preview.jpg">
+
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="What Is a Zero Width Space (U+200B)?">
+<meta name="twitter:description" content="Invisible Unicode character U+200B explained for developers.">
+<meta name="twitter:image" content="https://unicodecleaner.online/unicode-cleaner-preview.jpg">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+
+<link rel="stylesheet" href="css/style.css?v=2.0">
+<meta name="theme-color" content="#4f46e5">
+
+</head>
+<body>
+
+<div class="container">
+
+<nav class="top-nav">
+    <div class="nav-brand">
+        <a href="/" style="text-decoration:none;color:inherit;">Unicode Cleaner</a>
+    </div>
+</nav>
+
+<section class="u-section">
+<div class="faq-container">
+
+<h1>What Is a Zero Width Space (U+200B)?</h1>
+
+<p>A <strong>Zero Width Space (U+200B)</strong> is an invisible Unicode character used to indicate potential line break opportunities within text. It has no visual width, produces no visible symbol, and cannot be detected through normal visual inspection — yet it can break JSON parsing, authentication systems, form validation, and database queries.</p>
+
+<h2>Zero Width Space Technical Definition</h2>
+
+<ul>
+<li><strong>Name:</strong> Zero Width Space</li>
+<li><strong>Unicode Code Point:</strong> U+200B</li>
+<li><strong>Category:</strong> Format Character (Cf)</li>
+<li><strong>Visible Width:</strong> 0</li>
+<li><strong>UTF-8 Encoding:</strong> E2 80 8B</li>
+</ul>
+
+<p>Unlike a regular space (U+0020), U+200B does not create spacing. It only signals where a line break is allowed.</p>
+
+<h2>Why Zero Width Spaces Exist</h2>
+
+<p>Zero width spaces are primarily used in typography and web rendering. They help browsers wrap long strings — such as URLs or continuous characters — without adding visible breaks.</p>
+
+<p>Modern systems that commonly insert U+200B include:</p>
+
+<ul>
+<li>Rich text editors</li>
+<li>Google Docs</li>
+<li>Microsoft Word</li>
+<li>PDF copy-paste</li>
+<li>ChatGPT and other AI interfaces</li>
+<li>Messaging apps</li>
+</ul>
+
+<p>The problem arises when that hidden character is copied into raw code or structured data.</p>
+
+<h2>How U+200B Breaks JSON and Code</h2>
+
+<p>JSON is extremely strict. Only four whitespace characters are allowed:</p>
+
+<ul>
+<li>U+0020 (Space)</li>
+<li>U+0009 (Tab)</li>
+<li>U+000A (Line Feed)</li>
+<li>U+000D (Carriage Return)</li>
+</ul>
+
+<p>Zero Width Space (U+200B) is not allowed. If it appears between tokens, <code>JSON.parse()</code> throws:</p>
+
+<pre><code>SyntaxError: Unexpected token</code></pre>
+
+<h3>Example of a Broken JSON Key</h3>
+
+<pre><code>{
+  "user​name": "admin"
+}</code></pre>
+
+<p>The key visually reads as <code>username</code>, but it actually contains:</p>
+
+<pre><code>u s e r \u200B n a m e</code></pre>
+
+<p>That makes string comparisons fail silently.</p>
+
+<h2>How to Detect Zero Width Space</h2>
+
+<p>Most editors do not display it. However, you can detect it programmatically:</p>
+
+<pre><code>const hasZWSP = /\u200B/.test(inputString);</code></pre>
+
+<p>Or remove it safely:</p>
+
+<pre><code>const cleaned = inputString.replace(/\u200B/g, '');</code></pre>
+
+<h2>How to Remove Zero Width Space Safely</h2>
+
+<p>For quick cleanup, use a dedicated tool:</p>
+
+<ul>
+<li><a href="/">Unicode Cleaner</a></li>
+<li><a href="/chatgpt-cleaner.html">ChatGPT Cleaner</a></li>
+<li><a href="/json-cleaner.html">JSON Formatter & Cleaner</a></li>
+</ul>
+
+<p>All tools operate 100% client-side. No data is uploaded.</p>
+
+<h2>Why Developers Should Care</h2>
+
+<p>Zero width spaces cause:</p>
+
+<ul>
+<li>Authentication failures</li>
+<li>API signature mismatches</li>
+<li>JSON parsing errors</li>
+<li>Form validation bugs</li>
+<li>Database query mismatches</li>
+<li>Invisible string comparison failures</li>
+</ul>
+
+<p>Because the character is invisible, debugging becomes extremely time-consuming.</p>
+
+<h2>Zero Width Space vs Regular Space</h2>
+
+<p>Regular Space (U+0020):</p>
+<ul>
+<li>Visible spacing</li>
+<li>Allowed in JSON</li>
+<li>Standard ASCII</li>
+</ul>
+
+<p>Zero Width Space (U+200B):</p>
+<ul>
+<li>Invisible</li>
+<li>Not allowed in JSON structural whitespace</li>
+<li>Unicode-only character</li>
+</ul>
+
+<h2>Conclusion</h2>
+
+<p>Zero Width Space (U+200B) is a legitimate Unicode formatting character — but in development workflows, it often becomes a hidden bug. When copying text from rich interfaces or AI tools, invisible format characters may enter your codebase silently.</p>
+
+<p>Understanding how U+200B works — and how to remove it — prevents hours of debugging and protects your data integrity.</p>
+
+</div>
+</section>
+
+<footer>
+    <div class="footer-links">
+        <a href="/about.html">About</a>
+        <a href="/privacy.html">Privacy Policy</a>
+    </div>
+    <div class="copyright u-mt-1">
+        &copy; 2026 Unicode Cleaner
+    </div>
+</footer>
+
+</div>
+
+</body>
+  </html>
