@@ -295,3 +295,50 @@ footer {
     .btn-secondary,
     .btn-primary { padding: 9px 12px; }
                           }
+.tools-section {
+    max-width: 800px;
+    margin: var(--space-4) auto 0;
+}
+
+.tools-grid {
+    margin-top: var(--space-2);
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: var(--space-2);
+}
+
+.tool-card {
+    display: block;
+    text-decoration: none;
+    color: inherit;
+    background-color: var(--bg-elevated);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-md);
+    padding: var(--space-2);
+    box-shadow: var(--shadow-sm);
+    transition: transform 0.18s ease, box-shadow 0.18s ease, border-color 0.18s ease;
+}
+
+.tool-card h3 {
+    font-size: 1rem;
+    margin-bottom: var(--space-1);
+    color: var(--text-main);
+}
+
+.tool-card p {
+    color: var(--text-muted);
+    font-size: 0.9rem;
+}
+
+.tool-card:hover,
+.tool-card:focus-visible {
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-md);
+    border-color: var(--border-strong);
+}
+
+@media (min-width: 860px) {
+    .tools-grid {
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+}
