@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Why ChatGPT Breaks JSON When Copying (And How to Fix It) | Unicode Cleaner</title>
+
+<meta name="description" content="Discover why copy-pasting JSON from ChatGPT causes SyntaxError: Unexpected token. Learn how hidden Unicode characters like U+200B, NBSP, and BOM break JSON.parse() and how to fix it.">
+
+<link rel="canonical" href="https://unicodecleaner.online/why-chatgpt-breaks-json.html">
+
+<meta property="og:type" content="article">
+<meta property="og:url" content="https://unicodecleaner.online/why-chatgpt-breaks-json.html">
+<meta property="og:title" content="Why ChatGPT Breaks JSON When Copying (And How to Fix It)">
+<meta property="og:description" content="Learn why hidden Unicode characters break JSON parsing and how to fix invisible copy-paste errors from ChatGPT.">
+<meta property="og:image" content="https://unicodecleaner.online/unicode-cleaner-preview.jpg">
+
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Why ChatGPT Breaks JSON When Copying (And How to Fix It)">
+<meta name="twitter:description" content="Fix JSON.parse errors caused by invisible Unicode characters like U+200B and NBSP.">
+<meta name="twitter:image" content="https://unicodecleaner.online/unicode-cleaner-preview.jpg">
+
+<link rel="stylesheet" href="css/style.css">
+<meta name="theme-color" content="#4f46e5">
+
+</head>
+<body>
+
+<div class="container">
+
+<header>
+<nav>
+<a href="/">Home</a>
+</nav>
+</header>
+
+<main class="u-section">
+
+<h1>Why ChatGPT Breaks JSON When Copying (And How to Fix It)</h1>
+
+<p>If you have ever copied a perfectly formatted JSON payload from ChatGPT only to encounter <code>SyntaxError: Unexpected token</code>, the problem is rarely your logic. The issue is almost always invisible Unicode characters injected during copy-paste.</p>
+
+<h2>The Real Cause of "Unexpected token"</h2>
+
+<p>JSON is strict. According to the specification, only four whitespace characters are allowed outside strings:</p>
+
+<ul>
+<li>Space (U+0020)</li>
+<li>Horizontal Tab (U+0009)</li>
+<li>Line Feed (U+000A)</li>
+<li>Carriage Return (U+000D)</li>
+</ul>
+
+<p>Anything else — even if it looks like a space — will cause <code>JSON.parse()</code> to fail immediately.</p>
+
+<h2>Common Hidden Characters That Break JSON</h2>
+
+<h3>1. Zero Width Space (U+200B)</h3>
+<p>An invisible formatting character inserted by browsers to manage line wrapping. It has no visual width but is illegal in JSON.</p>
+
+<h3>2. Non-Breaking Space (U+00A0)</h3>
+<p>Looks identical to a normal space but is treated as a different Unicode character. JSON does not allow it.</p>
+
+<h3>3. Byte Order Mark (U+FEFF)</h3>
+<p>Used in some encoding contexts but invalid inside JSON strings or structural content.</p>
+
+<h2>Example of a Broken JSON Payload</h2>
+
+<pre><code>{
+"server_config": {
+"host": "127.0.0.1",
+"port": 8080
+}
+}</code></pre>
+
+<p>Visually correct. But if the indentation spaces are U+00A0 instead of U+0020, parsing fails instantly.</p>
+
+<h2>Programmatic Fix</h2>
+
+<pre><code>function sanitizeJSONString(str) {
+return str
+.replace(/[\u200B-\u200D\uFEFF]/g, '')
+.replace(/\u00A0/g, ' ');
+}
+
+const clean = sanitizeJSONString(raw);
+const parsed = JSON.parse(clean);</code></pre>
+
+<h2>Faster Fix: Use a Dedicated Tool</h2>
+
+<p>Instead of debugging invisible characters manually, use:</p>
+
+<ul>
+<li><a href="/">Unicode Cleaner</a></li>
+<li><a href="/chatgpt-cleaner.html">ChatGPT Cleaner</a></li>
+<li><a href="/json-cleaner.html">JSON Formatter & Cleaner</a></li>
+</ul>
+
+<p>All tools run 100% client-side. No uploads. No data storage.</p>
+
+<h2>Conclusion</h2>
+
+<p>AI-generated JSON is powerful but often contaminated with invisible formatting characters. Understanding U+200B, U+00A0, and U+FEFF prevents hours of debugging and ensures reliable parsing.</p>
+
+</main>
+
+<footer>
+<p>&copy; 2026 Unicode Cleaner</p>
+</footer>
+
+</div>
+
+</body>
+  </html>
