@@ -14,6 +14,14 @@
         allHidden: /[\u200B-\u200D\uFEFF\u200E\u200F\u2028\u2029\u00A0]/g
     };
 
+function removeOrphanSurrogates(str) {
+    return str.replace(
+        /([\uD800-\uDBFF](?![\uDC00-\uDFFF]))|((?<![\uD800-\uDBFF])[\uDC00-\uDFFF])/g,
+        ''
+    );
+}
+
+    
     function cleanTextByType(value, type) {
         if (type === 'all') {
             return value
