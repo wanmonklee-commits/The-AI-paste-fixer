@@ -1,63 +1,109 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>About – Unicode Cleaner</title>
-<meta name="description" content="Learn about Unicode Cleaner and how it helps remove hidden Unicode characters like zero-width spaces and invisible formatting.">
-<link rel="canonical" href="https://unicodecleaner.online/about.html">
-</head>
-<body style="font-family: Arial, sans-serif; max-width: 800px; margin: 40px auto; line-height: 1.6; padding: 20px;">
+<meta property="og:type" content="website">
+<meta property="og:url" content="[https://unicodecleaner.online/about.html](https://unicodecleaner.online/about.html)">
+<meta property="og:title" content="About Unicode Cleaner – Developer Tool for Removing Hidden Unicode Characters">
+<meta property="og:description" content="Learn about Unicode Cleaner, a privacy-focused developer tool for removing zero-width spaces, BOM, and hidden Unicode characters. 100% client-side.">
+<meta property="og:image" content="[https://unicodecleaner.online/unicode-cleaner-preview.jpg](https://unicodecleaner.online/unicode-cleaner-preview.jpg)">
 
-<h1>About Unicode Cleaner</h1>
+<meta property="twitter:card" content="summary_large_image">
+<meta property="twitter:url" content="[https://unicodecleaner.online/about.html](https://unicodecleaner.online/about.html)">
+<meta property="twitter:title" content="About Unicode Cleaner – Developer Tool for Removing Hidden Unicode Characters">
+<meta property="twitter:description" content="Learn about Unicode Cleaner, a privacy-focused developer tool for removing zero-width spaces, BOM, and hidden Unicode characters. 100% client-side.">
+<meta property="twitter:image" content="[https://unicodecleaner.online/unicode-cleaner-preview.jpg](https://unicodecleaner.online/unicode-cleaner-preview.jpg)">
 
-<p>
-Unicode Cleaner is a free online tool designed to detect and remove hidden Unicode characters 
-such as zero-width spaces (U+200B), non-breaking spaces (U+00A0), byte order marks (U+FEFF), 
-and other invisible formatting characters.
-</p>
+<link rel="canonical" href="[https://unicodecleaner.online/about.html](https://unicodecleaner.online/about.html)">
+<header>
+    <nav>
+        <a href="/">Unicode Cleaner Home</a>
+    </nav>
+</header>
 
-<p>
-These hidden characters often appear when copying text from AI tools, PDFs, Microsoft Word, 
-or websites. While invisible, they can break JSON files, cause syntax errors in code, 
-disrupt database entries, and trigger unexpected validation failures.
-</p>
+<main>
+    <h1>About Unicode Cleaner</h1>
 
-<h2>Why This Tool Exists</h2>
+    <p>
+        Unicode Cleaner is a specialized technical utility engineered to identify, isolate, and eliminate non-printing, hidden, and problematic Unicode characters from digital text. While modern computing relies heavily on the Unicode standard to represent global languages and symbols, this same complexity introduces "invisible" artifacts that can compromise data integrity, break software builds, and disrupt automated workflows.
+    </p>
 
-<p>
-Developers, students, and content creators frequently encounter frustrating copy-paste issues. 
-Unicode Cleaner was created to provide a fast, private, and browser-based solution 
-to instantly detect and remove problematic characters.
-</p>
+    <p>
+        This tool serves as a critical bridge for developers, data engineers, and technical writers who require a high-fidelity text environment. By utilizing a client-side execution model, <a href="/">Unicode Cleaner</a> ensures that sanitization occurs instantaneously without the security risks associated with data transmission to external servers.
+    </p>
 
-<h2>Privacy First</h2>
+    <h2>The Technical Challenge: Invisible Unicode Characters</h2>
+    
+    <p>
+        In an era dominated by large language models (LLMs) and complex document formatting engines, the "copy-paste" action is no longer a simple transfer of raw data. Modern applications such as Microsoft Word, Google Docs, PDFs, and AI interfaces like ChatGPT often inject metadata or formatting cues directly into the clipboard.
+    </p>
 
-<p>
-Unicode Cleaner runs entirely in your browser. No text is uploaded, stored, 
-or transmitted to any server. Everything happens locally on your device.
-</p>
+    <p>
+        These characters are mathematically valid within the Unicode spectrum but are visually absent in standard graphical user interfaces. For a developer, these characters are more than a nuisance; they are latent bugs.
+    </p>
 
-<h2>Who Is It For?</h2>
+    <h3>Common Problematic Artifacts</h3>
+    <ul>
+        <li><strong>Zero Width Space (U+200B):</strong> Used for invisible line-break hints, this character frequently breaks JSON parsing and string comparison logic.</li>
+        <li><strong>Non-Breaking Space (U+00A0):</strong> Visually identical to a standard space (U+0020), but often causes syntax errors in compilers that do not treat it as valid whitespace.</li>
+        <li><strong>Byte Order Mark (U+FEFF):</strong> While useful in UTF-16, a BOM at the start of a UTF-8 file can cause "Headers already sent" errors in web environments or lead to unexpected behavior in shell scripts.</li>
+        <li><strong>Soft Hyphen (U+00AD):</strong> Hidden until a line break occurs, often causing unexpected characters to appear in database entries.</li>
+        <li><strong>Directional Formatting Marks (U+200E, U+200F):</strong> Characters used to control text direction that can lead to "backwards" code execution or failed regex matches.</li>
+    </ul>
 
-<ul>
-<li>Developers debugging JSON or code errors</li>
-<li>Students submitting assignments</li>
-<li>Writers copying from AI tools</li>
-<li>Anyone facing invisible character issues</li>
-</ul>
+    <h2>Why This Tool Was Built</h2>
+    
+    <p>
+        The impetus for Unicode Cleaner was the recurring frustration faced by software engineers when debugging "ghost errors." A common scenario involves a developer copying a configuration snippet from a documentation portal or an AI chat interface, only for the application to throw a <code>SyntaxError: Unexpected token</code> despite the code appearing visually perfect.
+    </p>
 
-<p>
-Our goal is to keep the tool simple, fast, and secure for everyone.
-</p>
+    <p>
+        Standard text editors often fail to highlight these characters. While some advanced IDEs provide "show invisibles" modes, they often lack a streamlined method for bulk sanitization. We built Unicode Cleaner to provide a purpose-built environment specifically for the detection and removal of these artifacts. Whether you are dealing with a <a href="/json-cleaner.html">corrupted JSON file</a> or text generated by an LLM via a <a href="/chatgpt-cleaner.html">ChatGPT cleaner</a>, our tool provides the necessary clarity.
+    </p>
 
-<p>
-If you have suggestions or improvements, feel free to reach out.
-</p>
+    <h2>Privacy and Security Architecture</h2>
+    
+    <p>
+        Security is a non-negotiable requirement for developer tools. Many online "beautifiers" or "cleaners" act as black boxes where text is uploaded to a remote server for processing. This presents a significant risk when handling proprietary code, API keys, or sensitive configuration data.
+    </p>
 
-<hr>
+    <p>
+        Unicode Cleaner operates on a <strong>100% client-side architecture</strong>.
+    </p>
 
-<p><a href="/">← Back to Unicode Cleaner</a></p>
+    <h3>Zero Data Transmission</h3>
+    <p>
+        When you paste text into our interface, the sanitization logic is executed locally within your browser's JavaScript engine. No data is sent to our servers, no logs of your input are maintained, and no persistent storage is used for your text snippets. This "Sandbox" approach ensures that your data remains strictly on your hardware.
+    </p>
 
-</body>
-</html>
+    <h3>AdSense and Site Sustainability</h3>
+    <p>
+        To provide this service free of charge without compromising user privacy, Unicode Cleaner utilizes Google AdSense for monetization. These advertisements are loaded independently of the tool's core logic. We do not sell user data, nor do we track the content of the text you clean. The ads displayed allow us to maintain the domain, hosting, and ongoing development of the tool.
+    </p>
+
+    <h2>Who Uses Unicode Cleaner?</h2>
+
+    <p>
+        Our tool is designed for users who operate in high-precision environments where text accuracy is paramount:
+    </p>
+
+    <ul>
+        <li><strong>Software Engineers:</strong> Cleaning code snippets copied from tutorials or documentation to prevent compiler errors.</li>
+        <li><strong>Data Scientists:</strong> Sanitizing CSV or JSON datasets where invisible characters might skew analysis or cause import failures.</li>
+        <li><strong>DevOps Professionals:</strong> Ensuring YAML and shell scripts are free of hidden formatting before deployment.</li>
+        <li><strong>Quality Assurance Teams:</strong> Verifying that input validation handles or ignores hidden characters during edge-case testing.</li>
+        <li><strong>Technical Content Creators:</strong> Cleaning text before publishing to ensure it renders correctly across all platforms and devices.</li>
+    </ul>
+
+    <h2>Contact and Support</h2>
+    
+    <div class="contact-box">
+        <p>
+            Unicode Cleaner is maintained with a commitment to technical accuracy. If you encounter a specific Unicode character that is not currently handled, or if you have suggestions for improving our sanitization algorithms, we welcome your feedback.
+        </p>
+        <p>
+            <strong>Email:</strong> <a href="mailto:contact@unicodecleaner.online">contact@unicodecleaner.online</a>
+        </p>
+    </div>
+
+    <p class="footer-note">
+        Last updated: February 2026<br>
+        &copy; 2026 Unicode Cleaner. All rights reserved. Professional tools for the modern developer.
+    </p>
+</main>
