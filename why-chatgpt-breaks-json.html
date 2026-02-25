@@ -21,6 +21,10 @@
 <meta name="twitter:description" content="Fix JSON.parse errors caused by invisible Unicode characters like U+200B and NBSP.">
 <meta name="twitter:image" content="https://unicodecleaner.online/unicode-cleaner-preview.jpg">
 
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+
 <link rel="stylesheet" href="css/style.css?v=2.0">
 <meta name="theme-color" content="#4f46e5">
 
@@ -29,13 +33,14 @@
 
 <div class="container">
 
-<header>
-<nav>
-<a href="/">Home</a>
+<nav class="top-nav">
+    <div class="nav-brand">
+        <a href="/" style="text-decoration:none;color:inherit;">Unicode Cleaner</a>
+    </div>
 </nav>
-</header>
 
-<main class="u-section">
+<section class="u-section">
+<div class="faq-container">
 
 <h1>Why ChatGPT Breaks JSON When Copying (And How to Fix It)</h1>
 
@@ -68,28 +73,24 @@
 <h2>Example of a Broken JSON Payload</h2>
 
 <pre><code>{
-"server_config": {
-"host": "127.0.0.1",
-"port": 8080
-}
+  "server_config": {
+    "host": "127.0.0.1",
+    "port": 8080
+  }
 }</code></pre>
-
-<p>Visually correct. But if the indentation spaces are U+00A0 instead of U+0020, parsing fails instantly.</p>
 
 <h2>Programmatic Fix</h2>
 
 <pre><code>function sanitizeJSONString(str) {
-return str
-.replace(/[\u200B-\u200D\uFEFF]/g, '')
-.replace(/\u00A0/g, ' ');
+  return str
+    .replace(/[\u200B-\u200D\uFEFF]/g, '')
+    .replace(/\u00A0/g, ' ');
 }
 
 const clean = sanitizeJSONString(raw);
 const parsed = JSON.parse(clean);</code></pre>
 
 <h2>Faster Fix: Use a Dedicated Tool</h2>
-
-<p>Instead of debugging invisible characters manually, use:</p>
 
 <ul>
 <li><a href="/">Unicode Cleaner</a></li>
@@ -103,13 +104,20 @@ const parsed = JSON.parse(clean);</code></pre>
 
 <p>AI-generated JSON is powerful but often contaminated with invisible formatting characters. Understanding U+200B, U+00A0, and U+FEFF prevents hours of debugging and ensures reliable parsing.</p>
 
-</main>
+</div>
+</section>
 
 <footer>
-<p>&copy; 2026 Unicode Cleaner</p>
+    <div class="footer-links">
+        <a href="/about.html">About</a>
+        <a href="/privacy.html">Privacy Policy</a>
+    </div>
+    <div class="copyright u-mt-1">
+        &copy; 2026 Unicode Cleaner
+    </div>
 </footer>
 
 </div>
 
 </body>
-  </html>
+</html>
