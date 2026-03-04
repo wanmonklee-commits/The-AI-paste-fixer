@@ -57,10 +57,6 @@
   <priority>0.8</priority>
 </url>
 
-  <url>
-  <loc>https://unicodecleaner.online/remove-bom-from-json.html</loc>
-</url>
-
 <url>
   <loc>https://unicodecleaner.online/json-unexpected-token-error.html</loc>
   <lastmod>2026-02-25</lastmod>
