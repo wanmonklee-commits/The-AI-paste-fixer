@@ -14,6 +14,19 @@
         allHidden: /[\u200B-\u200D\u2060\uFEFF\u200E\u200F\u2028\u2029\u00A0]/g
     };
 
+    const CHAR_NAMES = {
+ "U+200B": "Zero Width Space",
+ "U+200C": "Zero Width Non-Joiner",
+ "U+200D": "Zero Width Joiner",
+ "U+FEFF": "Byte Order Mark (BOM)",
+ "U+200E": "Left-to-Right Mark",
+ "U+200F": "Right-to-Left Mark",
+ "U+2028": "Line Separator",
+ "U+2029": "Paragraph Separator",
+ "U+00A0": "Non-Breaking Space",
+ "U+2060": "Word Joiner"
+};
+
 function removeOrphanSurrogates(str) {
     return str.replace(
         /([\uD800-\uDBFF](?![\uDC00-\uDFFF]))|((?<![\uD800-\uDBFF])[\uDC00-\uDFFF])/g,
@@ -68,19 +81,6 @@ function removeOrphanSurrogates(str) {
                     const hex = 'U+' + m.charCodeAt(0).toString(16).toUpperCase().padStart(4, '0');
                     counts[hex] = (counts[hex] || 0) + 1;
                 });
-
-                const CHAR_NAMES = {
-    "U+200B": "Zero Width Space",
-    "U+200C": "Zero Width Non-Joiner",
-    "U+200D": "Zero Width Joiner",
-    "U+FEFF": "Byte Order Mark (BOM)",
-    "U+200E": "Left-to-Right Mark",
-    "U+200F": "Right-to-Left Mark",
-    "U+2028": "Line Separator",
-    "U+2029": "Paragraph Separator",
-    "U+00A0": "Non-Breaking Space",
-    "U+2060": "Word Joiner"
-};
 
 statsList.innerHTML = Object.entries(counts).map(([hex, count]) => `
     <li class="stat-item">
