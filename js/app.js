@@ -11,7 +11,7 @@
     const CHARS = {
         invisible: /[\u200B-\u200D\uFEFF\u200E\u200F\u2028\u2029]/g,
         nbsp: /\u00A0/g,
-        allHidden: /[\u200B-\u200D\uFEFF\u200E\u200F\u2028\u2029\u00A0]/g
+        allHidden: /[\u200B-\u200D\u2060\uFEFF\u200E\u200F\u2028\u2029\u00A0]/g
     };
 
 function removeOrphanSurrogates(str) {
@@ -78,7 +78,8 @@ function removeOrphanSurrogates(str) {
     "U+200F": "Right-to-Left Mark",
     "U+2028": "Line Separator",
     "U+2029": "Paragraph Separator",
-    "U+00A0": "Non-Breaking Space"
+    "U+00A0": "Non-Breaking Space",
+    "U+2060": "Word Joiner"
 };
 
 statsList.innerHTML = Object.entries(counts).map(([hex, count]) => `
