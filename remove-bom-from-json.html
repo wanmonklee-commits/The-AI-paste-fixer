@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Remove BOM From JSON | Fix UTF-8 BOM Parsing Errors</title>
+
+<meta name="description" content="Remove UTF-8 BOM (U+FEFF) from JSON strings that break JSON.parse. Learn why BOM causes parsing errors and how to fix them.">
+
+<link rel="canonical" href="https://unicodecleaner.online/remove-bom-from-json.html">
+
+<meta property="og:type" content="article">
+<meta property="og:url" content="https://unicodecleaner.online/remove-bom-from-json.html">
+<meta property="og:title" content="Remove BOM From JSON">
+<meta property="og:description" content="Learn why the UTF-8 Byte Order Mark breaks JSON parsing and how to remove it.">
+<meta property="og:image" content="https://unicodecleaner.online/unicode-cleaner-preview.jpg">
+
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Remove BOM From JSON">
+<meta name="twitter:description" content="Fix JSON parsing errors caused by the UTF-8 BOM character.">
+<meta name="twitter:image" content="https://unicodecleaner.online/unicode-cleaner-preview.jpg">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+
+<link rel="stylesheet" href="css/style.css?v=2.0">
+
+<meta name="theme-color" content="#4f46e5">
+</head>
+
+<body>
+<div class="container">
+
+<nav class="top-nav">
+<div class="nav-brand">
+<a href="/" style="text-decoration:none;color:inherit;">Unicode Cleaner</a>
+</div>
+</nav>
+
+<section class="u-section">
+<div class="faq-container">
+
+<h1>Remove BOM From JSON</h1>
+
+<p>Sometimes JSON appears perfectly valid but still fails when parsed. A common reason is the presence of a hidden character called the <strong>Byte Order Mark (BOM)</strong>.</p>
+
+<h2>What Is BOM?</h2>
+
+<p>The Byte Order Mark is a Unicode character:</p>
+
+<pre><code>U+FEFF</code></pre>
+
+<p>It is sometimes inserted automatically by text editors or file encoders when saving files in UTF-8 format.</p>
+
+<h2>Why BOM Breaks JSON</h2>
+
+<p>The JSON specification allows only a small set of whitespace characters. When a BOM appears before the JSON object, many parsers throw an error.</p>
+
+<pre><code>SyntaxError: Unexpected token ﻿ in JSON</code></pre>
+
+<p>This happens because the parser encounters an invisible character before the opening brace.</p>
+
+<h2>Example Problem</h2>
+
+<pre><code>﻿{"name":"admin"}</code></pre>
+
+<p>The hidden character before the brace is the BOM.</p>
+
+<h2>How To Fix It</h2>
+
+<p>You can remove the BOM programmatically:</p>
+
+<pre><code>
+function removeBOM(input) {
+  return input.replace(/\uFEFF/g, "");
+}
+</code></pre>
+
+<p>However, debugging invisible characters manually is difficult.</p>
+
+<h2>Easy Solution</h2>
+
+<p>Use the <a href="/">Unicode Cleaner</a> tool to detect and remove hidden characters instantly.</p>
+
+<ul>
+<li><a href="/">Unicode Cleaner</a></li>
+<li><a href="/chatgpt-cleaner.html">ChatGPT Cleaner</a></li>
+<li><a href="/json-cleaner.html">JSON Cleaner</a></li>
+</ul>
+
+<h2>Conclusion</h2>
+
+<p>The UTF-8 BOM is invisible but can cause major issues in JSON parsing. Detecting and removing hidden Unicode characters ensures reliable parsing and cleaner data pipelines.</p>
+
+</div>
+</section>
+
+<section class="u-section">
+<h3>Related Guides</h3>
+<ul>
+<li><a href="/why-chatgpt-breaks-json.html">Why ChatGPT Breaks JSON</a></li>
+<li><a href="/json-unexpected-token-error.html">JSON Unexpected Token Error</a></li>
+<li><a href="/unicode-vs-ascii.html">Unicode vs ASCII</a></li>
+</ul>
+</section>
+
+<footer>
+<div class="footer-links">
+<a href="/about.html">About</a>
+<a href="/privacy.html">Privacy Policy</a>
+</div>
+
+<div class="copyright u-mt-1">
+&copy; 2026 Unicode Cleaner
+</div>
+</footer>
+
+</div>
+</body>
+</html>
