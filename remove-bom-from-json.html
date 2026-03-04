@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Remove BOM From JSON – Fix JSON.parse Errors</title>
+
+<meta name="description" content="Remove UTF-8 BOM (U+FEFF) from JSON strings that break JSON.parse. Learn why BOM causes errors and how to clean it instantly.">
+
+<link rel="canonical" href="https://unicodecleaner.online/remove-bom-from-json.html">
+
+</head>
+
+<body>
+
+<h1>Remove BOM From JSON</h1>
+
+<p>
+Sometimes JSON parsing fails even when the JSON looks correct.
+One common reason is the <strong>Byte Order Mark (BOM)</strong>.
+</p>
+
+<h2>What is BOM?</h2>
+
+<p>
+The Byte Order Mark (U+FEFF) is a hidden Unicode character that may appear
+at the beginning of UTF-8 encoded files.
+</p>
+
+<p>
+Many JSON parsers cannot handle this character correctly and will throw
+errors like:
+</p>
+
+<pre>
+SyntaxError: Unexpected token ﻿ in JSON
+</pre>
+
+<h2>Example</h2>
+
+<pre>
+﻿{"name":"John"}
+</pre>
+
+<p>
+The invisible character before the JSON object is a BOM.
+</p>
+
+<h2>How to Remove BOM</h2>
+
+<p>
+You can remove hidden characters like BOM using the Unicode Cleaner tool.
+Paste your JSON into the tool and it will remove the invisible character instantly.
+</p>
+
+<p>
+Use the tool here:
+</p>
+
+<p>
+<a href="https://unicodecleaner.online/">Unicode Cleaner</a>
+</p>
+
+</body>
+</html>
