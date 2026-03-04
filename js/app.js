@@ -69,13 +69,25 @@ function removeOrphanSurrogates(str) {
                     counts[hex] = (counts[hex] || 0) + 1;
                 });
 
-                statsList.innerHTML = Object.entries(counts).map(([hex, count]) => `
-                    <li class="stat-item">
-                        <span class="stat-code">${hex}</span>
-                        <span class="stat-name">Invisible Character</span>
-                        <span class="stat-count">Found ${count} time(s)</span>
-                    </li>
-                `).join('');
+                const CHAR_NAMES = {
+    "U+200B": "Zero Width Space",
+    "U+200C": "Zero Width Non-Joiner",
+    "U+200D": "Zero Width Joiner",
+    "U+FEFF": "Byte Order Mark (BOM)",
+    "U+200E": "Left-to-Right Mark",
+    "U+200F": "Right-to-Left Mark",
+    "U+2028": "Line Separator",
+    "U+2029": "Paragraph Separator",
+    "U+00A0": "Non-Breaking Space"
+};
+
+statsList.innerHTML = Object.entries(counts).map(([hex, count]) => `
+    <li class="stat-item">
+        <span class="stat-code">${hex}</span>
+        <span class="stat-name">${CHAR_NAMES[hex] || "Invisible Character"}</span>
+        <span class="stat-count">Found ${count} time(s)</span>
+    </li>
+`).join('');
             }
         }
 
