@@ -9,7 +9,7 @@
     const toast = document.getElementById('toast');
 
     const CHARS = {
-        invisible: /[\u200B-\u200D\uFEFF\u200E\u200F\u2028\u2029]/g,
+        invisible: /[\u200B-\u200D\u2060\uFEFF\u200E\u200F\u2028\u2029]/g,
         nbsp: /\u00A0/g,
         allHidden: /[\u200B-\u200D\u2060\uFEFF\u200E\u200F\u2028\u2029\u00A0]/g
     };
