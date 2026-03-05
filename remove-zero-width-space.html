@@ -1,1 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
+<title>Remove Zero Width Space (U+200B) | Unicode Cleaner</title>
+
+<meta name="description" content="Learn how to remove zero width spaces (U+200B) that break JSON.parse, APIs, and code. Fix invisible Unicode characters easily.">
+
+<link rel="canonical" href="https://unicodecleaner.online/remove-zero-width-space.html">
+
+<meta property="og:type" content="article">
+<meta property="og:url" content="https://unicodecleaner.online/remove-zero-width-space.html">
+<meta property="og:title" content="Remove Zero Width Space (U+200B)">
+<meta property="og:description" content="Learn how to detect and remove invisible zero width spaces that break code and JSON parsing.">
+<meta property="og:image" content="https://unicodecleaner.online/unicode-cleaner-preview.jpg">
+
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Remove Zero Width Space (U+200B)">
+<meta name="twitter:description" content="Fix hidden zero width spaces breaking your JSON, APIs, and code.">
+<meta name="twitter:image" content="https://unicodecleaner.online/unicode-cleaner-preview.jpg">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+
+<link rel="stylesheet" href="css/style.css?v=2.0">
+
+<meta name="theme-color" content="#4f46e5">
+</head>
+
+<body>
+
+<div class="container">
+
+<nav class="top-nav">
+<div class="nav-brand">
+<a href="/" style="text-decoration:none;color:inherit;">Unicode Cleaner</a>
+</div>
+</nav>
+
+<section class="u-section">
+<div class="faq-container">
+
+<h1>Remove Zero Width Space (U+200B)</h1>
+
+<p>A <strong>zero width space (U+200B)</strong> is an invisible Unicode character used for text formatting and word breaking. Although it cannot be seen, it can cause serious issues in code, APIs, and data processing systems.</p>
+
+<h2>What Is a Zero Width Space?</h2>
+
+<p>A zero width space is a special Unicode character that allows line breaks without adding visible spacing. It is often inserted automatically by text editors, messaging platforms, or content management systems.</p>
+
+<p>Because the character is invisible, developers often do not realize it exists in their text.</p>
+
+<h2>Why Zero Width Spaces Appear</h2>
+
+<p>Zero width spaces commonly appear when copying and pasting text from:</p>
+
+<ul>
+<li>Slack</li>
+<li>Microsoft Word</li>
+<li>Notion</li>
+<li>ChatGPT</li>
+<li>Google Docs</li>
+<li>Rich text editors</li>
+</ul>
+
+<p>These tools sometimes insert hidden formatting characters to control line wrapping or layout.</p>
+
+<h2>Why Zero Width Spaces Break Code</h2>
+
+<p>Invisible characters can break many systems that expect strict formatting.</p>
+
+<ul>
+<li>JSON parsing failures</li>
+<li>API request validation errors</li>
+<li>Unexpected string mismatches</li>
+<li>Database comparison bugs</li>
+<li>Authentication token errors</li>
+</ul>
+
+<p>Because the character is invisible, debugging the problem can be extremely frustrating.</p>
+
+<h2>Example</h2>
+
+<pre><code>Hello​World</code></pre>
+
+<p>The text above looks normal, but there is actually a hidden character between the two words. That invisible character is <strong>U+200B Zero Width Space</strong>.</p>
+
+<h2>Remove Zero Width Space in JavaScript</h2>
+
+<p>You can remove zero width spaces using a simple JavaScript replacement:</p>
+
+<pre><code>
+text.replace(/\u200B/g, "")
+</code></pre>
+
+<p>This removes all instances of the hidden character from the string.</p>
+
+<h2>Use a Unicode Cleaner Tool</h2>
+
+<p>Instead of manually searching for invisible characters, you can use an automated cleaner.</p>
+
+<p><a href="/">Unicode Cleaner</a> detects and removes hidden Unicode characters such as:</p>
+
+<ul>
+<li>Zero Width Space (U+200B)</li>
+<li>Non-Breaking Space (U+00A0)</li>
+<li>Byte Order Mark (U+FEFF)</li>
+<li>Other invisible Unicode characters</li>
+</ul>
+
+<p>The tool runs entirely in your browser and helps quickly debug invisible character problems.</p>
+
+<p>
+<a href="/">Unicode Cleaner</a><br>
+<a href="/chatgpt-cleaner.html">ChatGPT Cleaner</a><br>
+<a href="/json-cleaner.html">JSON Formatter & Cleaner</a>
+</p>
+
+</div>
+</section>
+
+<section class="u-section">
+<h3>Related Guides</h3>
+
+<ul>
+<li><a href="/why-chatgpt-breaks-json.html">Why ChatGPT Breaks JSON</a></li>
+<li><a href="/json-unexpected-token-error.html">JSON Unexpected Token Error</a></li>
+<li><a href="/unicode-vs-ascii.html">Unicode vs ASCII</a></li>
+</ul>
+
+</section>
+
+<footer>
+
+<div class="footer-links">
+<a href="/about.html">About</a>
+<a href="/privacy.html">Privacy Policy</a>
+</div>
+
+<div class="copyright u-mt-1">
+&copy; 2026 Unicode Cleaner
+</div>
+
+</footer>
+
+</div>
+
+</body>
+  </html>
