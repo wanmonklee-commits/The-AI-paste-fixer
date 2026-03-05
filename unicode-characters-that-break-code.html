@@ -1,1 +1,265 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
+<title>Unicode Characters That Break Code | Unicode Cleaner</title>
+
+<meta name="description" content="Learn about invisible Unicode characters that break JSON, APIs, and code including zero width space, BOM, NBSP, and other hidden characters.">
+
+<link rel="canonical" href="https://unicodecleaner.online/unicode-characters-that-break-code.html">
+
+<meta property="og:type" content="article">
+<meta property="og:url" content="https://unicodecleaner.online/unicode-characters-that-break-code.html">
+<meta property="og:title" content="Unicode Characters That Break Code">
+<meta property="og:description" content="A developer reference for invisible Unicode characters that cause bugs in JSON, APIs, and code.">
+<meta property="og:image" content="https://unicodecleaner.online/unicode-cleaner-preview.jpg">
+
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Unicode Characters That Break Code">
+<meta name="twitter:description" content="Understand invisible Unicode characters that silently break JSON parsing and code.">
+<meta name="twitter:image" content="https://unicodecleaner.online/unicode-cleaner-preview.jpg">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+
+<link rel="stylesheet" href="css/style.css?v=2.0">
+
+<meta name="theme-color" content="#4f46e5">
+
+</head>
+
+<body>
+
+<div class="container">
+
+<nav class="top-nav">
+<div class="nav-brand">
+<a href="/" style="text-decoration:none;color:inherit;">Unicode Cleaner</a>
+</div>
+</nav>
+
+<section class="u-section">
+<div class="faq-container">
+
+<h1>Unicode Characters That Break Code</h1>
+
+<p>
+Many developers encounter mysterious bugs when copying text from documentation,
+Slack messages, Word documents, Notion pages, or AI tools like ChatGPT.
+The real cause is often <strong>invisible Unicode characters</strong>.
+</p>
+
+<p>
+These characters are not visible on screen but can break
+JSON parsing, APIs, database queries, authentication tokens, and application logic.
+</p>
+
+<p>
+Below is a developer reference for common Unicode characters that silently cause bugs.
+</p>
+
+<h2>U+200B Zero Width Space</h2>
+
+<p>
+The <strong>Zero Width Space</strong> is an invisible character used for word breaking.
+It often appears when copying text from messaging apps or rich text editors.
+</p>
+
+<p>Why it breaks code:</p>
+
+<ul>
+<li>Invalid JSON input</li>
+<li>Unexpected string mismatches</li>
+<li>API validation errors</li>
+</ul>
+
+<pre><code>Hello​World</code></pre>
+
+<p>The invisible character between the words is U+200B.</p>
+
+<pre><code>
+text.replace(/\u200B/g, "")
+</code></pre>
+
+<h2>U+200C Zero Width Non Joiner</h2>
+
+<p>
+The Zero Width Non Joiner prevents characters from joining in certain writing systems.
+However it can accidentally appear in copied code or identifiers.
+</p>
+
+<p>Why it breaks code:</p>
+
+<ul>
+<li>Variable names mismatch</li>
+<li>Database query failures</li>
+<li>Unexpected authentication errors</li>
+</ul>
+
+<pre><code>
+text.replace(/\u200C/g, "")
+</code></pre>
+
+<h2>U+200D Zero Width Joiner</h2>
+
+<p>
+The Zero Width Joiner is used in typography and emoji composition.
+While useful in language rendering, it can appear accidentally in copied text.
+</p>
+
+<p>Why it breaks code:</p>
+
+<ul>
+<li>Invisible characters inside tokens</li>
+<li>Unexpected string comparisons</li>
+<li>Hidden formatting issues</li>
+</ul>
+
+<pre><code>
+text.replace(/\u200D/g, "")
+</code></pre>
+
+<h2>U+2060 Word Joiner</h2>
+
+<p>
+The Word Joiner prevents line breaks between characters. Like other invisible characters,
+it may appear when copying text from formatted documents.
+</p>
+
+<p>Why it breaks code:</p>
+
+<ul>
+<li>Unexpected whitespace handling</li>
+<li>String mismatch bugs</li>
+<li>Invisible formatting characters</li>
+</ul>
+
+<pre><code>
+text.replace(/\u2060/g, "")
+</code></pre>
+
+<h2>U+00A0 Non Breaking Space</h2>
+
+<p>
+The Non Breaking Space looks identical to a regular space but behaves differently.
+It often appears when copying text from HTML pages or formatted editors.
+</p>
+
+<p>Why it breaks code:</p>
+
+<ul>
+<li>Whitespace mismatch in strings</li>
+<li>Database search failures</li>
+<li>Form validation errors</li>
+</ul>
+
+<pre><code>
+text.replace(/\u00A0/g, " ")
+</code></pre>
+
+<h2>U+FEFF Byte Order Mark</h2>
+
+<p>
+The Byte Order Mark (BOM) is sometimes inserted at the beginning of UTF-8 files.
+If present in JSON data, it can cause immediate parsing failures.
+</p>
+
+<p>Why it breaks code:</p>
+
+<ul>
+<li>JSON.parse errors</li>
+<li>Unexpected token errors</li>
+<li>API request failures</li>
+</ul>
+
+<pre><code>
+text.replace(/\uFEFF/g, "")
+</code></pre>
+
+<h2>U+2028 Line Separator</h2>
+
+<p>
+The Unicode Line Separator is not always treated as valid whitespace in JavaScript or JSON.
+It can cause parsing issues when embedded in strings.
+</p>
+
+<pre><code>
+text.replace(/\u2028/g, "")
+</code></pre>
+
+<h2>U+2029 Paragraph Separator</h2>
+
+<p>
+The Paragraph Separator behaves similarly to the Line Separator and may break
+JavaScript or JSON when inserted into text data.
+</p>
+
+<pre><code>
+text.replace(/\u2029/g, "")
+</code></pre>
+
+<h2>Use a Unicode Cleaner Tool</h2>
+
+<p>
+Manually searching for invisible characters can be extremely difficult.
+A dedicated cleaning tool helps detect and remove hidden Unicode characters instantly.
+</p>
+
+<p>
+<a href="/">Unicode Cleaner</a> detects characters like:
+</p>
+
+<ul>
+<li>Zero Width Space (U+200B)</li>
+<li>Non Breaking Space (U+00A0)</li>
+<li>Byte Order Mark (U+FEFF)</li>
+<li>Other invisible Unicode characters</li>
+</ul>
+
+<p>
+Try the tools:
+</p>
+
+<p>
+<a href="/">Unicode Cleaner</a><br>
+<a href="/chatgpt-cleaner.html">ChatGPT Cleaner</a><br>
+<a href="/json-cleaner.html">JSON Formatter & Cleaner</a>
+</p>
+
+</div>
+</section>
+
+<section class="u-section">
+
+<h3>Related Guides</h3>
+
+<ul>
+<li><a href="/remove-zero-width-space.html">Remove Zero Width Space</a></li>
+<li><a href="/remove-bom-from-json.html">Remove BOM From JSON</a></li>
+<li><a href="/why-chatgpt-breaks-json.html">Why ChatGPT Breaks JSON</a></li>
+<li><a href="/json-unexpected-token-error.html">JSON Unexpected Token Error</a></li>
+</ul>
+
+</section>
+
+<footer>
+
+<div class="footer-links">
+<a href="/about.html">About</a>
+<a href="/privacy.html">Privacy Policy</a>
+</div>
+
+<div class="copyright u-mt-1">
+&copy; 2026 Unicode Cleaner
+</div>
+
+</footer>
+
+</div>
+
+</body>
+  </html>
